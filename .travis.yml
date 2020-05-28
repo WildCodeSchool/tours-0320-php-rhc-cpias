@@ -18,8 +18,11 @@ script:
     - ./bin/sass-lint -c sass-linter.yml -v
 notifications:
     email:
-        - TRAINER@wildcodeschool.fr
-        - STUDENT_MAIL
+        - romain.clair@wildcodeschool.com
+        - benjamin.tourneur7@gmail.com
+        - mme.matos.elise@gmail.com
+        - sarah.jlmbrt@gmail.com
+        - charles.chevreuil@gmail.com
 branches:
     only:
         - master
