@@ -3,40 +3,40 @@
 {% block title %}Strain{% endblock %}
 
 {% block body %}
-    <h1>Strain</h1>
+    <h1>Enregistrer un nouveau prélèvement</h1>
 
-    <table class="table">
+    <table class="table table-dark table-striped table-bordered mt-3">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th scope="col">Id</th>
                 <td>{{ strain.id }}</td>
             </tr>
             <tr>
-                <th>Creno</th>
+                <th scope="col">Creno</th>
                 <td>{{ strain.creno }}</td>
             </tr>
             <tr>
-                <th>DatePrelevement</th>
+                <th scope="col">DatePrelevement</th>
                 <td>{{ strain.datePrelevement ? strain.datePrelevement|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>TypePrelevement</th>
+                <th scope="col">TypePrelevement</th>
                 <td>{{ strain.typePrelevement }}</td>
             </tr>
             <tr>
-                <th>MicroOrganisme</th>
+                <th scope="col">MicroOrganisme</th>
                 <td>{{ strain.microOrganisme }}</td>
             </tr>
             <tr>
-                <th>Resistance</th>
+                <th scope="col">Resistance</th>
                 <td>{{ strain.resistance }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('strain_index') }}">back to list</a>
+    <a class="btn btn-success" href="{{ path('strain_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('strain_edit', {'id': strain.id}) }}">edit</a>
+    <a class="btn btn-danger" href="{{ path('strain_edit', {'id': strain.id}) }}">Editer</a>
 
     {{ include('strain/_delete_form.html.twig') }}
 {% endblock %}

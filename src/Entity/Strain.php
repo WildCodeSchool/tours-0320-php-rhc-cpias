@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\StrainRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=StrainRepository::class)
+ * @UniqueEntity(fields={"creno"}, message="Cet identifiant CRENO existe déjà")
  */
 class Strain
 {
@@ -19,26 +22,33 @@ class Strain
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un identifiant CRENO")
+     * @Assert\NotNull
+     * @Assert\Positive(message="L'identifiant CRENO doit être un nombre entier positif")
      */
     private $creno;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Veuillez renseigner une date de prélèvement")
      */
     private $datePrelevement;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un type de prélèvement")
      */
     private $typePrelevement;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un micro-organisme")
      */
     private $microOrganisme;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un type de résistance")
      */
     private $resistance;
 
