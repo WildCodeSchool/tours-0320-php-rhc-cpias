@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Strain{% endblock %}
+
+{% block body %}
+    <h1>Create new Strain</h1>
+
+    {{ include('strain/_form.html.twig') }}
+
+    <a href="{{ path('strain_index') }}">back to list</a>
+{% endblock %}

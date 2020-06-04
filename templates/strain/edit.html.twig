@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Strain{% endblock %}
+
+{% block body %}
+    <h1>Edit Strain</h1>
+
+    {{ include('strain/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('strain_index') }}">back to list</a>
+
+    {{ include('strain/_delete_form.html.twig') }}
+{% endblock %}

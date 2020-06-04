@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Strain{% endblock %}
+
+{% block body %}
+    <h1>Strain</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ strain.id }}</td>
+            </tr>
+            <tr>
+                <th>Creno</th>
+                <td>{{ strain.creno }}</td>
+            </tr>
+            <tr>
+                <th>DatePrelevement</th>
+                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TypePrelevement</th>
+                <td>{{ strain.typePrelevement }}</td>
+            </tr>
+            <tr>
+                <th>MicroOrganisme</th>
+                <td>{{ strain.microOrganisme }}</td>
+            </tr>
+            <tr>
+                <th>Resistance</th>
+                <td>{{ strain.resistance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('strain_index') }}">back to list</a>
+
+    <a href="{{ path('strain_edit', {'id': strain.id}) }}">edit</a>
+
+    {{ include('strain/_delete_form.html.twig') }}
+{% endblock %}
