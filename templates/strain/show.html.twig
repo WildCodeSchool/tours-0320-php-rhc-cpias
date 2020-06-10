@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Strain{% endblock %}
+
+{% block body %}
+    <h1>Enregistrer un nouveau prélèvement</h1>
+
+    <table class="table table-dark table-striped table-bordered mt-3">
+        <tbody>
+            <tr>
+                <th scope="col">Id</th>
+                <td>{{ strain.id }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Creno</th>
+                <td>{{ strain.creno }}</td>
+            </tr>
+            <tr>
+                <th scope="col">DatePrelevement</th>
+                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th scope="col">TypePrelevement</th>
+                <td>{{ strain.typePrelevement }}</td>
+            </tr>
+            <tr>
+                <th scope="col">MicroOrganisme</th>
+                <td>{{ strain.microOrganisme }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Resistance</th>
+                <td>{{ strain.resistance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('strain_index') }}">Retour à la liste</a>
+
+    <a class="btn btn-danger" href="{{ path('strain_edit', {'id': strain.id}) }}">Editer</a>
+
+    {{ include('strain/_delete_form.html.twig') }}
+{% endblock %}
