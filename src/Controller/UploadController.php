@@ -20,9 +20,8 @@ class UploadController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $upload->getName();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = uniqid().'.'.$file->guessExtension();
             $file->move($this->getParameter('csv_directory'), $fileName);
-            $upload->setName($fileName);
         }
 
         return $this->render('uploader.html.twig', [
