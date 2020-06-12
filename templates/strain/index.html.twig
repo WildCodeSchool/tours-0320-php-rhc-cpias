@@ -4,8 +4,8 @@
 
 {% block body %}
     <h1>Liste des résultats</h1>
-
-    <table class="table table-bordered table-dark">
+    <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">CRENO</th>
@@ -20,13 +20,13 @@
         {% for strain in strains %}
             <tr>
                 <th scope="row">{{ strain.creno }}</th>
-                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('Y-m-d') : '' }}</td>
+                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('d-m-Y') : '' }}</td>
                 <td>{{ strain.typePrelevement }}</td>
                 <td>{{ strain.microOrganisme }}</td>
                 <td>{{ strain.resistance }}</td>
                 <td>
-                    <a href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
-                    <a href="{{ path('strain_edit', {'id': strain.id}) }}">Editer</a>
+                    <a class="btn btn-info" href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
+                    <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -36,6 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('strain_new') }}">Ajouter</a>
 {% endblock %}

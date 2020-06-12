@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Strain;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,7 @@ class StrainType extends AbstractType
         $builder
             ->add('creno', IntegerType::class)
             ->add('datePrelevement', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
             ->add('typePrelevement', ChoiceType::class, [
                 'choices' => [
@@ -28,18 +29,14 @@ class StrainType extends AbstractType
                 ]
             ])
             ->add('microOrganisme', ChoiceType::class, [
-                'choices' => [
-                    'Staphylococcus aureus' => 'STA AUR',
-                    'Escherichia coli' => 'ESC COL',
-                    'Klebsiella pneumoniae' => 'KLE PNE'
-                ]
+                'choices' => Strain::MICRO_ORGANISM
             ])
             ->add('resistance', ChoiceType::class, [
                 'choices' => [
                     'OXA-48' => 'OXA-48',
                     'NDM-1' => 'NDM-1',
-                    'KPC-3' => 'KPC-3'
-                ]
+                    'KPC-3' => 'KPC-3',
+                ],
             ])
         ;
     }
