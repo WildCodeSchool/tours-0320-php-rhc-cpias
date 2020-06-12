@@ -1,42 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Strain{% endblock %}
+{% block title %}Souche{% endblock %}
 
 {% block body %}
-    <h1>Enregistrer un nouveau prélèvement</h1>
-
-    <table class="table table-dark table-striped table-bordered mt-3">
+    <section class="card text-dark m-3">
+        <div class="card-header bg-light">
+    <h1>Détails {{ strain.creno }}</h1>
+        </div>
+    <table  class="table table-hover">
         <tbody>
             <tr>
-                <th scope="col">Id</th>
-                <td>{{ strain.id }}</td>
+                <th scope="col">Date de prélèvement</th>
+                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th scope="col">Creno</th>
-                <td>{{ strain.creno }}</td>
-            </tr>
-            <tr>
-                <th scope="col">DatePrelevement</th>
-                <td>{{ strain.datePrelevement ? strain.datePrelevement|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th scope="col">TypePrelevement</th>
+                <th scope="col">Type de prélèvement</th>
                 <td>{{ strain.typePrelevement }}</td>
             </tr>
             <tr>
-                <th scope="col">MicroOrganisme</th>
+                <th scope="col">Micro-organisme</th>
                 <td>{{ strain.microOrganisme }}</td>
             </tr>
             <tr>
-                <th scope="col">Resistance</th>
+                <th scope="col">Mécanisme de résistance</th>
                 <td>{{ strain.resistance }}</td>
             </tr>
         </tbody>
     </table>
+    </section>
 
-    <a class="btn btn-success" href="{{ path('strain_index') }}">Retour à la liste</a>
-
-    <a class="btn btn-danger" href="{{ path('strain_edit', {'id': strain.id}) }}">Editer</a>
-
+    <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
     {{ include('strain/_delete_form.html.twig') }}
+    <a class="btn btn-info" href="{{ path('strain_index') }}">Retour</a>
+
 {% endblock %}

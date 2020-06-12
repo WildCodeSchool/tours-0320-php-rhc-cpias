@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=StrainRepository::class)
- * @UniqueEntity(fields={"creno"}, message="Cet identifiant CRENO existe déjà")
+ * @UniqueEntity(fields={"creno", "datePrelevement"}, message="Cet identifiant CRENO existe déjà")
  */
 class Strain
 {
@@ -31,6 +31,7 @@ class Strain
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Veuillez renseigner une date de prélèvement")
+     * @Assert\Date
      */
     private $datePrelevement;
 
