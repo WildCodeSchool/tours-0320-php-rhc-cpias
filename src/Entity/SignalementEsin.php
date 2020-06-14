@@ -63,7 +63,7 @@ class SignalementEsin
     private $epidemieCasGroupes;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $caractereNosocomial;
 
@@ -85,32 +85,32 @@ class SignalementEsin
     /**
      * @ORM\Column(type="integer")
      */
-    private $codeMicroOrganisme;
+    private $codeMicroOrganisme1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $codeSite;
+    private $codeMicroOrganisme2;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $investigation;
+    private $codeMicroOrganisme3;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $hypotheseCause;
+    private $codeSiteUn;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $justification;
+    private $codeSiteDeux;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $praticienHygiene;
+    private $codeSiteTrois;
 
     public function getId(): ?int
     {
@@ -206,7 +206,7 @@ class SignalementEsin
         return $this->nbCas;
     }
 
-    public function setNCAS0(?int $nbCas): self
+    public function setNbCas(?int $nbCas): self
     {
         $this->nbCas = $nbCas;
 
@@ -273,74 +273,74 @@ class SignalementEsin
         return $this;
     }
 
-    public function getCodeMicroOrganisme(): ?int
+    public function getCodeMicroOrganisme1(): ?int
     {
-        return $this->codeMicroOrganisme;
+        return $this->codeMicroOrganisme1;
     }
 
-    public function setCodeMicroOrganisme(int $codeMicroOrganisme): self
+    public function setCodeMicroOrganisme1(int $codeMicroOrganisme1): self
     {
-        $this->codeMicroOrganisme = $codeMicroOrganisme;
+        $this->codeMicroOrganisme1 = $codeMicroOrganisme1;
 
         return $this;
     }
 
-    public function getCodeSite(): ?int
+    public function getCodeMicroOrganisme2(): ?int
     {
-        return $this->codeSite;
+        return $this->codeMicroOrganisme2;
     }
 
-    public function setCodeSite(int $codeSite): self
+    public function setCodeMicroOrganisme2(int $codeMicroOrganisme2): self
     {
-        $this->codeSite = $codeSite;
+        $this->codeMicroOrganisme2 = $codeMicroOrganisme2;
 
         return $this;
     }
 
-    public function getInvestigation(): ?string
+    public function getCodeMicroOrganisme3(): ?int
     {
-        return $this->investigation;
+        return $this->codeMicroOrganisme3;
     }
 
-    public function setInvestigation(?string $investigation): self
+    public function setCodeMicroOrganisme3(int $codeMicroOrganisme3): self
     {
-        $this->investigation = $investigation;
+        $this->codeMicroOrganisme3 = $codeMicroOrganisme3;
 
         return $this;
     }
 
-    public function getHypotheseCause(): ?string
+    public function getCodeSiteUn(): ?int
     {
-        return $this->hypotheseCause;
+        return $this->codeSiteUn;
     }
 
-    public function setHypotheseCause(?string $hypotheseCause): self
+    public function setCodeSiteUn(int $codeSiteUn): self
     {
-        $this->hypotheseCause = $hypotheseCause;
+        $this->codeSiteUn = $codeSiteUn;
 
         return $this;
     }
 
-    public function getJustification(): ?string
+    public function getCodeSiteDeux(): ?int
     {
-        return $this->justification;
+        return $this->codeSiteDeux;
     }
 
-    public function setJustification(?string $justification): self
+    public function setCodeSiteDeux(int $codeSiteDeux): self
     {
-        $this->justification = $justification;
+        $this->codeSiteDeux = $codeSiteDeux;
 
         return $this;
     }
 
-    public function getPraticienHygiene(): ?string
+    public function getCodeSiteTrois(): ?int
     {
-        return $this->praticienHygiene;
+        return $this->codeSiteTrois;
     }
 
-    public function setPraticienHygiene(?string $praticienHygiene): self
+    public function setCodeSiteTrois(int $codeSiteTrois): self
     {
-        $this->praticienHygiene = $praticienHygiene;
+        $this->codeSiteTrois = $codeSiteTrois;
 
         return $this;
     }
