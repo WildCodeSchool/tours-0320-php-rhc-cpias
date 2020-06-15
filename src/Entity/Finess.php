@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FinessRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Finess
      * @ORM\Column(type="string", length=255)
      */
     private $coordinates;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Strain::class, mappedBy="finess", orphanRemoval=true)
+     */
+    private $strains;
+
+    public function __construct()
+    {
+        $this->strains = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,37 @@ class Finess
     public function setCoordinates(string $coordinates): self
     {
         $this->coordinates = $coordinates;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Strain[]
+     */
+    public function getStrains(): Collection
+    {
+        return $this->strains;
+    }
+
+    public function addStrain(Strain $strain): self
+    {
+        if (!$this->strains->contains($strain)) {
+            $this->strains[] = $strain;
+            $strain->setFiness($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStrain(Strain $strain): self
+    {
+        if ($this->strains->contains($strain)) {
+            $this->strains->removeElement($strain);
+            // set the owning side to null (unless already changed)
+            if ($strain->getFiness() === $this) {
+                $strain->setFiness(null);
+            }
+        }
 
         return $this;
     }

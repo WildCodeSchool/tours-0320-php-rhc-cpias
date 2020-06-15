@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Finess;
 use App\Entity\Strain;
 use Doctrine\DBAL\Types\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +20,13 @@ class StrainType extends AbstractType
     {
         $builder
             ->add('creno', IntegerType::class)
+            ->add('finess', EntityType::class, [
+                'class' => Finess::class,
+                'choice_label' => 'etablissement',
+                'expanded' => false,
+                'multiple' => false,
+                'by_reference' => false
+            ])
             ->add('datePrelevement', DateType::class, [
                 'widget' => 'single_text',
             ])
