@@ -22,9 +22,7 @@ class UploadController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $upload->getName();
-            $fileName = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('csv_directory'), $fileName);
-            $openFile = fopen($fileName, 'r');
+            $openFile = fopen($file->getRealPath(), 'r');
             if ($openFile !== false) {
                 $record = fgetcsv($openFile, 0, ";", '"');
                 //on saute la première ligne qui contient les intitulés des champs
@@ -33,45 +31,42 @@ class UploadController extends AbstractController
                     $esin = new SignalementEsin();
                     $esinSuite = new EsinSuite();
                     $esin ->setIdentifiantDeLaFiche($record[0]);
-                    $esin ->setDateDerniereModif($record[2]);
-                    $esin ->setEmissionDeLaFiche($record[3]);
-                    $esin ->setEpisodePrecedent($record[9]);
+                    $esin ->setStringDerniereModif($record[2]);
+                    $esin ->setEmissionString($record[3]);
+                    $esin ->setStringEpisode($record[9]);
                     $esin ->setCodeFinessEtab($record[13]);
                     $esin ->setEnvoiAuCnr($record[32]);
                     $esin ->setNomCnrOuLabo($record[34]);
-                    $esin ->setNbCas($record[49]);
-                    $esin ->setEpidemieCasGroupes($record[55]);
-                    $esin ->setCaractereNosocomial($record[56]);
-                    $esin ->setOrigineCasImportes($record[62]);
-                    $esin ->setEtabConcernes($record[63]);
-                    $esin ->setAutresEtabs($record[64]);
-                    $esin ->setCodeMicroOrganisme1($record[71]);
-                    $esin ->setCodeMicroOrganisme2($record[73]);
-                    $esin ->setCodeMicroOrganisme3($record[75]);
-                    $esin ->setCodeSiteUn($record[77]);
-                    $esin ->setCodeSiteDeux($record[79]);
-                    $esin ->setCodeSiteTrois($record[81]);
-                    $esinSuite ->setInvestigation($record[84]);
-                    $esinSuite ->setHypotheseCause($record[86]);
-                    $esinSuite ->setJustification($record[94]);
-                    $esinSuite ->setPraticienHygiene($record[95]);
+                    $esin ->setNbCas($record[50]);
+                    $esin ->setEpidemieCasGroupes($record[56]);
+                    $esin ->setCaractereNosocomial($record[57]);
+                    $esin ->setOrigineCasImportes($record[63]);
+                    $esin ->setEtabConcernes($record[64]);
+                    $esin ->setAutresEtabs($record[65]);
+                    $esin ->setCodeMicroOrganisme1($record[72]);
+                    $esin ->setCodeMicroOrganisme2($record[74]);
+                    $esin ->setCodeMicroOrganisme3($record[76]);
+                    $esin ->setCodeSiteUn($record[78]);
+                    $esin ->setCodeSiteDeux($record[80]);
+                    $esin ->setCodeSiteTrois($record[82]);
+                    $esinSuite ->setInvestigation($record[85]);
+                    $esinSuite ->setHypotheseCause($record[87]);
+                    $esinSuite ->setJustification($record[95]);
+                    $esinSuite ->setPraticienHygiene($record[96]);
                     $record = fgetcsv($openFile, 0, ";", '"');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($esin);
+                    $entityManager->persist($esinSuite);
+                    $entityManager->flush();
                 }
             }
-            {
-                return $this->render(
-                    'form_upload.html.twig',
-                    ['form' => $form->createView(),
-                    'errorMessage' => 'Le fichier n\' a pas pu être ouvert'
-            
-                    ]
-                );
-            }
         }
+        return $this->render(
+            'form_upload.html.twig',
+            ['form' => $form->createView(),
+            'errorMessage' => 'Le fichier n\' a pas pu être ouvert'
 
-        return $this->render('form_upload.html.twig', [
-            'form' => $form->createView(),
-            
-        ]);
+            ]
+        );
     }
 }
