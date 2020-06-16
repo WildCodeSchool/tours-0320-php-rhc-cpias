@@ -27,9 +27,9 @@ class UploadController extends AbstractController
                 $record = fgetcsv($openFile, 0, ";", '"');
                 //on saute la première ligne qui contient les intitulés des champs
                 $record = fgetcsv($openFile, 0, ";", '"');
+                $entityManager = $this->getDoctrine()->getManager();
                 while ($record!== false) {
                     $esin = new SignalementEsin();
-                    $esinSuite = new EsinSuite();
                     $esin ->setIdentifiantDeLaFiche($record[0]);
                     $esin ->setStringDerniereModif($record[2]);
                     $esin ->setEmissionString($record[3]);
@@ -49,16 +49,14 @@ class UploadController extends AbstractController
                     $esin ->setCodeSiteUn($record[78]);
                     $esin ->setCodeSiteDeux($record[80]);
                     $esin ->setCodeSiteTrois($record[82]);
-                    $esinSuite ->setInvestigation($record[85]);
-                    $esinSuite ->setHypotheseCause($record[87]);
-                    $esinSuite ->setJustification($record[95]);
-                    $esinSuite ->setPraticienHygiene($record[96]);
+                    $esin ->setInvestigation($record[85]);
+                    $esin ->setHypotheseCause($record[87]);
+                    $esin ->setJustification($record[95]);
+                    $esin ->setPraticienHygiene($record[96]);
                     $record = fgetcsv($openFile, 0, ";", '"');
-                    $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($esin);
-                    $entityManager->persist($esinSuite);
-                    $entityManager->flush();
                 }
+                $entityManager->flush();
             }
         }
         return $this->render(
