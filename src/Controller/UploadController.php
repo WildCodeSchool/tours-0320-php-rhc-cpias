@@ -6,7 +6,7 @@ use App\Form\UploadType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Upload;
+use App\Model\Upload;
 use App\Entity\SignalementEsin;
 use App\Entity\EsinSuite;
 
@@ -21,7 +21,7 @@ class UploadController extends AbstractController
         $form = $this->createForm(UploadType::class, $upload);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $upload->getName();
+            $file = $upload->getUploadedFile();
             $openFile = fopen($file->getRealPath(), 'r');
             if ($openFile !== false) {
                 $record = fgetcsv($openFile, 0, ";", '"');
