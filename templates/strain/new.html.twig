@@ -3,6 +3,7 @@
 {% block title %}Enregistrer{% endblock %}
 
 {% block body %}
+    <p>Utilisateur connecté : {{ app.user.username }}</p>
     <h1>Enregistrer un nouveau prélèvement</h1>
 
     {{ include('strain/_form.html.twig') }}
