@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Upload;
+use App\Model\Upload;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
