@@ -8,12 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class FinessController extends AbstractController
 {
 
-     /**
+    /**
      * @Route("finess/new", name="finess_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_RESPONSABLE")
      * @param Request $request
      * @return Response
      */
@@ -37,8 +39,9 @@ class FinessController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/finess/edit/{id}", name="finess_edit", methods={"GET","POST"}, requirements ={"id"="\d+"})
+     * @IsGranted("ROLE_RESPONSABLE")
      * @param Request $request
      * @param Finess $finess
      * @return Response

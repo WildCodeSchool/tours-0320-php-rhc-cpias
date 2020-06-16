@@ -3,20 +3,26 @@
 {% block title %}Liste des résultats{% endblock %}
 
 {% block body %}
-    <p>Utilisateur connecté : {{ app.user.username }}</p>
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %}
     <h1>Liste des résultats</h1>
-    <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
+    {% if is_granted('ROLE_RESPONSABLE') %}
+        <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
+    {%  endif %}
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th scope="col">CRENO</th>
-                <th scope="col">Etablissement</th>
-                <th scope="col">Date de prélèvement</th>
-                <th scope="col">Type de prélèvement</th>
-                <th scope="col">Micro-Organisme</th>
-                <th scope="col">Resistance</th>
-                <th scope="col">Actions</th>
-            </tr>
+        <tr>
+            <th scope="col">CRENO</th>
+            <th scope="col">Etablissement</th>
+            <th scope="col">Date de prélèvement</th>
+            <th scope="col">Type de prélèvement</th>
+            <th scope="col">Micro-Organisme</th>
+            <th scope="col">Resistance</th>
+            <th scope="col">Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for strain in strains %}
@@ -29,7 +35,9 @@
                 <td>{{ strain.resistance }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
-                    <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
+                    {% if is_granted('ROLE_RESPONSABLE') %}
+                        <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
+                    {%endif%}
                 </td>
             </tr>
         {% else %}

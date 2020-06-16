@@ -15,15 +15,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Déclaration e.sin</a>
             </li>
-            {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
-                </li>
-            {% endif %}
         </ul>
     </div>
 </nav>
