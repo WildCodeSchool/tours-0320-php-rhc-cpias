@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th scope="col">CRENO</th>
+                <th scope="col">Etablissement</th>
                 <th scope="col">Date de prélèvement</th>
                 <th scope="col">Type de prélèvement</th>
                 <th scope="col">Micro-Organisme</th>
@@ -20,6 +21,7 @@
         {% for strain in strains %}
             <tr>
                 <th scope="row">{{ strain.creno }}</th>
+                <td>{{ strain.finess.etablissement }}</td>
                 <td>{{ strain.datePrelevement ? strain.datePrelevement|date('d-m-Y') : '' }}</td>
                 <td>{{ strain.typePrelevement }}</td>
                 <td>{{ strain.microOrganisme }}</td>

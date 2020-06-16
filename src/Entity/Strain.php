@@ -165,6 +165,12 @@ class Strain
      */
     private $resistance;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Finess::class, inversedBy="strains")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $finess;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -226,6 +232,18 @@ class Strain
     public function setResistance(string $resistance): self
     {
         $this->resistance = $resistance;
+
+        return $this;
+    }
+
+    public function getFiness(): ?Finess
+    {
+        return $this->finess;
+    }
+
+    public function setFiness(?Finess $finess): self
+    {
+        $this->finess = $finess;
 
         return $this;
     }
