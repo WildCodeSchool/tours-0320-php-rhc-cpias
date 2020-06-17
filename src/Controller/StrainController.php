@@ -30,7 +30,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/new", name="strain_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_RESPONSABLE")
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @return Response
      */
@@ -68,7 +68,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="strain_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_RESPONSABLE")
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @param Strain $strain
      * @return Response
@@ -92,7 +92,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/{id}", name="strain_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_RESPONSABLE")
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @param Strain $strain
      * @return Response

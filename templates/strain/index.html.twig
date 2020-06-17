@@ -9,7 +9,7 @@
         </div>
     {% endif %}
     <h1>Liste des résultats</h1>
-    {% if is_granted('ROLE_RESPONSABLE') %}
+    {% if is_granted('ROLE_TECHNICIAN') %}
         <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
     {%  endif %}
     <table class="table table-hover">
@@ -35,7 +35,7 @@
                 <td>{{ strain.resistance }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
-                    {% if is_granted('ROLE_RESPONSABLE') %}
+                    {% if is_granted('ROLE_TECHNICIAN') %}
                         <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
                     {%endif%}
                 </td>

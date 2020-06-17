@@ -24,8 +24,8 @@ class FinessType extends AbstractType
                 'label' => 'Adresse'
             ])
 
-            ->add('codePostale', TextType::class, [
-                'label' => 'Code postale'
+            ->add('codePostal', TextType::class, [
+                'label' => 'Code postal'
             ])
 
             ->add('ville', TextType::class, [

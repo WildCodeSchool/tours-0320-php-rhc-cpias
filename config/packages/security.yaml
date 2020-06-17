@@ -1,7 +1,6 @@
 security:
     role_hierarchy:
-        ROLE_UTILISATEUR: ROLE_USER
-        ROLE_RESPONSABLE:  ROLE_UTILISATEUR
+        ROLE_TECHNICIAN: ROLE_USER
     encoders:
         App\Entity\User:
             algorithm: auto
@@ -38,8 +37,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/strain, roles: ROLE_UTILISATEUR }
-        - { path: ^/finess, roles: ROLE_UTILISATEUR }
-        - { path: ^/upload, roles: ROLE_UTILISATEUR }
+        - { path: ^/strain, roles: ROLE_USER }
+        - { path: ^/finess, roles: ROLE_USER }
+        - { path: ^/upload, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
