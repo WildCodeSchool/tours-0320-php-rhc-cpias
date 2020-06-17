@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SignalementEsinRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
+use \DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SignalementEsinRepository::class)
@@ -20,41 +21,57 @@ class SignalementEsin
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $identifiantDeLaFiche;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date
      */
     private $emissionDeLaFiche;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date
      */
     private $dateDerniereModif;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeFinessEtab;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date
      */
     private $episodePrecedent;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     * @Assert\Choice(choices={"oui", "non", "Oui", "Non"})
      */
     private $envoiAuCnr;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255",
+     * maxMessage="{{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères")
      */
     private $nomCnrOuLabo;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $nbCas;
 
@@ -65,16 +82,21 @@ class SignalementEsin
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Choice(choices={1,2})
      */
     private $caractereNosocomial;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $origineCasImportes;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $etabConcernes;
 
@@ -85,31 +107,41 @@ class SignalementEsin
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeMicroOrganisme1;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeMicroOrganisme2;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeMicroOrganisme3;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeSiteUn;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $codeSiteDeux;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $codeSiteTrois;
 

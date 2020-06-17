@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Repository\UploadRepository;
-use Doctrine\ORM\Mapping as ORM;
 
 class Upload
 {
