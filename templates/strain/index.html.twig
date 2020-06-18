@@ -3,11 +3,6 @@
 {% block title %}Liste des résultats{% endblock %}
 
 {% block body %}
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-        </div>
-    {% endif %}
     <h1>Liste des résultats</h1>
     {% if is_granted('ROLE_TECHNICIAN') %}
         <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>

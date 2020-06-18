@@ -3,11 +3,6 @@
 {% block title %}Souche{% endblock %}
 
 {% block body %}
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-        </div>
-    {% endif %}
     <section class="card text-dark m-3">
         <div class="card-header bg-light">
             <h1>Détails {{ strain.creno }}</h1>
