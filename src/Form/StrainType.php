@@ -21,12 +21,12 @@ class StrainType extends AbstractType
         $builder
             ->add('creno', IntegerType::class)
             ->add('finess', EntityType::class, [
-                    'class' => Finess::class,
-                    'choice_label' => 'etablissement',
-                    'expanded' => false,
-                    'multiple' => false,
-                    'by_reference' => false
-                ])
+                'class' => Finess::class,
+                'choice_label' => 'etablissement',
+                'expanded' => false,
+                'multiple' => false,
+                'by_reference' => false
+            ])
             ->add('datePrelevement', DateType::class, [
                 'widget' => 'single_text',
             ])

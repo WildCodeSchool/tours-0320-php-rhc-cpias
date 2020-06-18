@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# block scriptOpenLayers à laisser vide #}
+        {% block scriptOpenLayers %}{% endblock %}
+        <link rel="stylesheet" href="build/css/app.scss">
+        {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %}
+
+        {% endblock %}
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+    <header>{%  include '_navbar.html.twig' %}</header>
+        {% block body %}
+        {% endblock %}
+        {% block javascripts %}
+
+        {% endblock %}
+        {{ encore_entry_script_tags('app') }}
+
+    </body>
+</html>
