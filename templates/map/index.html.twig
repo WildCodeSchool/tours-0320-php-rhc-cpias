@@ -18,7 +18,7 @@
     </div>
     {% for etab in finess %}
         <div class="ponctuel" style="display: none;">
-            <a class="label" id="label" target="_blank" href="https://www.chu-tours.fr/">{{ etab.etablissement }}</a>
+            <a class="label" id="label" target="_blank" href="/map/strainByFiness/{{ etab.id }}">{{ etab.etablissement }}</a>
             <div class = "marker" id="marker" title="Marker"></div>
             <div class ="coord">{{ etab.coordinates }}</div>
         </div>
