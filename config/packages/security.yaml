@@ -1,6 +1,7 @@
 security:
     role_hierarchy:
         ROLE_TECHNICIAN: ROLE_USER
+
     encoders:
         App\Entity\User:
             algorithm: auto
