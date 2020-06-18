@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SignalementEsin;
+use App\Entity\EsinSuite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
