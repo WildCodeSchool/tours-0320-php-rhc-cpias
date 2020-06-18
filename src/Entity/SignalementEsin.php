@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SignalementEsinRepository;
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SignalementEsinRepository::class)
@@ -19,41 +21,57 @@ class SignalementEsin
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $identifiantDeLaFiche;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date
      */
     private $emissionDeLaFiche;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date
      */
     private $dateDerniereModif;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $codeFinessEtab;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date
      */
     private $episodePrecedent;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     * @Assert\Choice(choices={"oui", "non", "Oui", "Non"})
      */
     private $envoiAuCnr;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255",
+     * maxMessage="{{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères")
      */
     private $nomCnrOuLabo;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $nbCas;
 
@@ -63,17 +81,22 @@ class SignalementEsin
     private $epidemieCasGroupes;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Choice(choices={1,2})
      */
     private $caractereNosocomial;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $origineCasImportes;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
     private $etabConcernes;
 
@@ -84,13 +107,43 @@ class SignalementEsin
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
-    private $codeMicroOrganisme;
+    private $codeMicroOrganisme1;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
      */
-    private $codeSite;
+    private $codeMicroOrganisme2;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
+     */
+    private $codeMicroOrganisme3;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Positive
+     */
+    private $codeSiteUn;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive
+     */
+    private $codeSiteDeux;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive
+     */
+    private $codeSiteTrois;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -141,6 +194,15 @@ class SignalementEsin
         return $this;
     }
 
+    public function setEmissionString(string $date)
+    {
+        $day = substr($date, 0, 2);
+        $month = substr($date, 3, 2);
+        $year = substr($date, 6, 4);
+        $this->emissionDeLaFiche = new DateTime($year ."-". $month . "-". $day);
+        return $this;
+    }
+
     public function getDateDerniereModif(): ?\DateTimeInterface
     {
         return $this->dateDerniereModif;
@@ -150,6 +212,15 @@ class SignalementEsin
     {
         $this->dateDerniereModif = $dateDerniereModif;
 
+        return $this;
+    }
+
+    public function setStringDerniereModif(string $date)
+    {
+        $day = substr($date, 0, 2);
+        $month = substr($date, 3, 2);
+        $year = substr($date, 6, 4);
+        $this->dateDerniereModif = new DateTime($year ."-". $month . "-". $day);
         return $this;
     }
 
@@ -174,6 +245,15 @@ class SignalementEsin
     {
         $this->episodePrecedent = $episodePrecedent;
 
+        return $this;
+    }
+
+    public function setStringEpisode(string $date)
+    {
+        $day = substr($date, 0, 2);
+        $month = substr($date, 3, 2);
+        $year = substr($date, 6, 4);
+        $this->episodePrecedent = new DateTime($year ."-". $month . "-". $day);
         return $this;
     }
 
@@ -206,7 +286,7 @@ class SignalementEsin
         return $this->nbCas;
     }
 
-    public function setNCAS0(?int $nbCas): self
+    public function setNbCas(?int $nbCas): self
     {
         $this->nbCas = $nbCas;
 
@@ -225,12 +305,12 @@ class SignalementEsin
         return $this;
     }
 
-    public function getCaractereNosocomial(): ?bool
+    public function getCaractereNosocomial(): int
     {
         return $this->caractereNosocomial;
     }
 
-    public function setCaractereNosocomial(?bool $caractereNosocomial): self
+    public function setCaractereNosocomial(int $caractereNosocomial): self
     {
         $this->caractereNosocomial = $caractereNosocomial;
 
@@ -242,7 +322,7 @@ class SignalementEsin
         return $this->origineCasImportes;
     }
 
-    public function setOrigineCasImportes(int $origineCasImportes): self
+    public function setOrigineCasImportes(?int $origineCasImportes): self
     {
         $this->origineCasImportes = $origineCasImportes;
 
@@ -273,26 +353,74 @@ class SignalementEsin
         return $this;
     }
 
-    public function getCodeMicroOrganisme(): ?int
+    public function getCodeMicroOrganisme1(): ?int
     {
-        return $this->codeMicroOrganisme;
+        return $this->codeMicroOrganisme1;
     }
 
-    public function setCodeMicroOrganisme(int $codeMicroOrganisme): self
+    public function setCodeMicroOrganisme1(int $codeMicroOrganisme1): self
     {
-        $this->codeMicroOrganisme = $codeMicroOrganisme;
+        $this->codeMicroOrganisme1 = $codeMicroOrganisme1;
 
         return $this;
     }
 
-    public function getCodeSite(): ?int
+    public function getCodeMicroOrganisme2(): ?int
     {
-        return $this->codeSite;
+        return $this->codeMicroOrganisme2;
     }
 
-    public function setCodeSite(int $codeSite): self
+    public function setCodeMicroOrganisme2(int $codeMicroOrganisme2): self
     {
-        $this->codeSite = $codeSite;
+        $this->codeMicroOrganisme2 = $codeMicroOrganisme2;
+
+        return $this;
+    }
+
+    public function getCodeMicroOrganisme3(): ?int
+    {
+        return $this->codeMicroOrganisme3;
+    }
+
+    public function setCodeMicroOrganisme3(int $codeMicroOrganisme3): self
+    {
+        $this->codeMicroOrganisme3 = $codeMicroOrganisme3;
+
+        return $this;
+    }
+
+    public function getCodeSiteUn(): ?int
+    {
+        return $this->codeSiteUn;
+    }
+
+    public function setCodeSiteUn(int $codeSiteUn): self
+    {
+        $this->codeSiteUn = $codeSiteUn;
+
+        return $this;
+    }
+
+    public function getCodeSiteDeux(): ?int
+    {
+        return $this->codeSiteDeux;
+    }
+
+    public function setCodeSiteDeux(int $codeSiteDeux): self
+    {
+        $this->codeSiteDeux = $codeSiteDeux;
+
+        return $this;
+    }
+
+    public function getCodeSiteTrois(): ?int
+    {
+        return $this->codeSiteTrois;
+    }
+
+    public function setCodeSiteTrois(int $codeSiteTrois): self
+    {
+        $this->codeSiteTrois = $codeSiteTrois;
 
         return $this;
     }
