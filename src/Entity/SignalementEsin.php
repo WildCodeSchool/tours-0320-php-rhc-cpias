@@ -40,7 +40,6 @@ class SignalementEsin
     private $dateDerniereModif;
 
     /**
-     * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\Positive
      */
