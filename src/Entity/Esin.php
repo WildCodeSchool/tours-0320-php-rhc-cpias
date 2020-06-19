@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SignalementEsinRepository;
+use App\Repository\EsinRepository;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=SignalementEsinRepository::class)
+ * @ORM\Entity(repositoryClass=EsinRepository::class)
  */
-class SignalementEsin
+class Esin
 {
     /**
      * @ORM\Id()
