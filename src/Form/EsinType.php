@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class EsinType extends AbstractType
 {
@@ -14,7 +15,15 @@ class EsinType extends AbstractType
     {
         $builder
             ->add('UploadedFile', FileType::class, [
-                'label' => 'Fichier CSV'
+                'label' => 'Fichier CSV',
+                'constraints' => [
+                    new File([
+                        'mimeTypes' =>[
+                            'text/csv',
+                        ],
+                        'mimeTypesMessage' => 'Ce n\'est pas un fichier CSV',
+                    ])
+                ],
 
             ])
             
