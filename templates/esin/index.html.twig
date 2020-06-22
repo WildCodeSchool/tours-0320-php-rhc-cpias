@@ -1,2 +1,36 @@
 {% extends 'base.html.twig' %}
-{% extends 'upload.html.twig' %}
+
+{% block title %}Liste des signalements e-sin{% endblock %}
+
+{% block body %}
+    <h1>Liste des signalements e-sin</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">identifiant de la fiche</th>
+            <th scope="col">Emission de la fiche</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        {% for esin in esins %}
+            <tr>
+                <th scope="row">{{ esin.identifiantDeLaFiche }}</th>
+                <th scope="row">{{ esin.emissionDeLaFiche ? esin.emissionDeLaFiche|date('d-m-Y') : '' }}</th>
+                <td>
+                   <a class="btn btn-info" href="{{ path('esin_show', {'id': esin.id}) }}">Afficher</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun résultat à afficher</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+   
+        {% if is_granted('ROLE_TECHNICIAN') %}
+        <a class="btn btn-success" href="{{ path('esin_new') }}">Ajouter un signalement e-sin</a>
+        {% endif %}
+
+{% endblock %}

@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Form\EsinType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Upload;
 use App\Entity\Esin;
 use App\Service\DataRecovery;
+use App\Repository\EsinRepository;
 
 /**
  * @Route("/esin")
@@ -17,11 +19,27 @@ class EsinController extends AbstractController
 {
 
    /**
-    * @Route("/index", name="esin_index")
+    * @Route("/", name="esin_index", methods={"GET"})
     */
-    public function index()
+    public function index(EsinRepository $esinRepository): Response
     {
+        return $this->render('esin/index.html.twig', [
+            'esins' => $esinRepository->findAll(),
+        ]);
     }
+
+
+   /**
+    * @Route("/show", name="esin_show")
+    */
+
+    public function show(EsinRepository $esinRepository): Response
+    {
+        return $this->render('esin/show.html.twig', [
+            'esins' => $esinRepository->findAll(),
+        ]);
+    }
+
 
    /**
     * @Route("/new", name="esin_new")

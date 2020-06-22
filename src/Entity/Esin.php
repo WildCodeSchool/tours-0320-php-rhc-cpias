@@ -40,6 +40,7 @@ class Esin
     private $dateDerniereModif;
 
     /**
+     * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\Positive
      */
@@ -53,7 +54,7 @@ class Esin
     private $episodePrecedent;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Choice(choices={"oui", "non", "Oui", "Non"})
      */
