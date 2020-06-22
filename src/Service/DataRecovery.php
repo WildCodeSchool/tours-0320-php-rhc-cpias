@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Upload;
-use App\Entity\SignalementEsin;
+use App\Entity\Esin;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DataRecovery
@@ -30,7 +30,7 @@ class DataRecovery
                 //on saute la première ligne qui contient les intitulés des champs
                 $record = fgetcsv($openFile, 0, ";", '"');
                 while ($record!== false) {
-                    $esin = new SignalementEsin();
+                    $esin = new Esin();
                     $esin ->setIdentifiantDeLaFiche($record[0]);
                     $esin ->setStringDerniereModif($record[2]);
                     $esin ->setEmissionString($record[3]);
