@@ -30,13 +30,13 @@ class EsinController extends AbstractController
 
 
    /**
-    * @Route("/show", name="esin_show")
+    * @Route("/show/{id}", name="esin_show")
     */
 
-    public function show(EsinRepository $esinRepository): Response
+    public function show(Esin $esin): Response
     {
         return $this->render('esin/show.html.twig', [
-            'esins' => $esinRepository->findAll(),
+            'esin' => $esin,
         ]);
     }
 

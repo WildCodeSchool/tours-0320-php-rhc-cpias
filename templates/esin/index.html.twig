@@ -18,7 +18,7 @@
                 <th scope="row">{{ esin.identifiantDeLaFiche }}</th>
                 <th scope="row">{{ esin.emissionDeLaFiche ? esin.emissionDeLaFiche|date('d-m-Y') : '' }}</th>
                 <td>
-                   <a class="btn btn-info" href="{{ path('esin_show', {'id': esin.id}) }}">Afficher</a>
+                   <a class="btn btn-info" href="{{path('esin_show', {'id': esin.id})}}">Afficher</a>
                 </td>
             </tr>
         {% else %}
