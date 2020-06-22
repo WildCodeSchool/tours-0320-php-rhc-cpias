@@ -20,6 +20,7 @@ class EsinType extends AbstractType
                     new File([
                         'mimeTypes' =>[
                             'text/csv',
+                            'text/plain',
                         ],
                         'mimeTypesMessage' => 'Ce n\'est pas un fichier CSV',
                     ])
