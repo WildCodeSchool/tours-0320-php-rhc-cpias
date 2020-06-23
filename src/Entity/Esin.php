@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SignalementEsinRepository;
+use App\Repository\EsinRepository;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=SignalementEsinRepository::class)
+ * @ORM\Entity(repositoryClass=EsinRepository::class)
  */
-class SignalementEsin
+class Esin
 {
     /**
      * @ORM\Id()
@@ -54,7 +54,7 @@ class SignalementEsin
     private $episodePrecedent;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Choice(choices={"oui", "non", "Oui", "Non"})
      */
