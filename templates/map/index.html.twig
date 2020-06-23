@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte{% endblock %}
+{% block scriptOpenLayers %}
+    {# les scripts js d'openlayer sont ajouté depuis "/asset" car il y a des incompatibilités avec le compileur de webpack#}
+    <script src="/openlayer/ol.js"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('ol') }}
+    {{ encore_entry_link_tags('carte') }}
+{% endblock %}
+{% block body %}
+    <div class="container-lg">
+        <h1>Carte des établissements</h1>
+        <p>cliquez sur le nom pour afficher les souches et les signalements rataché à cet établissement</p>
+
+        <div id="map" class="map"></div>
+    </div>
+    {% for etab in finess %}
+        <div class="ponctuel" style="display: none;">
+            <a class="label" id="label" target="_blank" href="/map/strainByFiness/{{ etab.id }}">{{ etab.etablissement }}</a>
+            <div class = "marker" id="marker" title="Marker"></div>
+            <div class ="coord">{{ etab.coordinates }}</div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+ {% block javascripts %}
+     <script src="/openlayer/finessLayer.js"></script>
+ {% endblock %}

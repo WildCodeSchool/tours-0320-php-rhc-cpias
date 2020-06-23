@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier{% endblock %}
+
+{% block body %}
+    <p>Utilisateur connecté : {{ app.user.username }}</p>
+    <h1>Modifier un prélèvement</h1>
+
+    {{ include('strain/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a class="btn btn-info" href="{{ path('strain_index') }}">Retour</a>
+
+    {{ include('strain/_delete_form.html.twig') }}
+{% endblock %}
