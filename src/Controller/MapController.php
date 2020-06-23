@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\MapSelectionType;
 use App\Entity\Strain;
 use App\Entity\Finess;
 use App\Repository\FinessRepository;
@@ -22,9 +23,16 @@ class MapController extends AbstractController
      */
     public function index(FinessRepository $finessRepository): Response
     {
+        $form = $this->createForm(MapSelectionType::class,
+            null,
+            ['action' => $this->generateUrl('route'),
+            'method'=>Request::METHOD_GET
+        ]);
+
         $fine = $finessRepository->findAll();
         return $this->render('map/index.html.twig', [
-            'finess' => $fine
+            'finess' => $fine,
+            'form' => $form->createView()
         ]);
     }
 

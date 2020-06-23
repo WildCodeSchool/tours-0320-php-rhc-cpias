@@ -14,6 +14,12 @@
         <h1>Carte des établissements</h1>
         <p>cliquez sur le nom pour afficher les souches et les signalements rataché à cet établissement</p>
 
+        {{ form_start(form) }}
+        {{ form_row(form.microOrganisme) }}
+        {{ form_row(form.resistance) }}
+        <button type="submit" name="btnSearch">Rechercher</button>
+        {{ form_end(form) }}
+
         <div id="map" class="map"></div>
     </div>
     {% for etab in finess %}
