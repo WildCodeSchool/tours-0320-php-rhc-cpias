@@ -56,7 +56,7 @@ class Esin
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     * @Assert\Choice(choices={"oui", "non", "Oui", "Non"})
+     * @Assert\Choice({"oui", "non", "Oui", "Non"})
      */
     private $envoiAuCnr;
 
@@ -257,12 +257,12 @@ class Esin
         return $this;
     }
 
-    public function getEnvoiAuCNR(): ?bool
+    public function getEnvoiAuCNR(): ?string
     {
         return $this->envoiAuCnr;
     }
 
-    public function setEnvoiAuCNR(?bool $envoiAuCnr): self
+    public function setEnvoiAuCNR(?string $envoiAuCnr): self
     {
         $this->envoiAuCnr = $envoiAuCnr;
 
