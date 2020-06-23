@@ -23,11 +23,12 @@ class MapController extends AbstractController
      */
     public function index(FinessRepository $finessRepository): Response
     {
-        $form = $this->createForm(MapSelectionType::class,
+        $form = $this->createForm(
+            MapSelectionType::class,
             null,
             ['action' => $this->generateUrl('route'),
-            'method'=>Request::METHOD_GET
-        ]);
+            'method'=>Request::METHOD_GET]
+        );
 
         $fine = $finessRepository->findAll();
         return $this->render('map/index.html.twig', [
