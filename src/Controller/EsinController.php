@@ -51,6 +51,7 @@ class EsinController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $dataRecovery->recovery($upload->getUploadedFile());
+            return $this->redirectToRoute('esin_index');
         }
         return $this->render(
             'esin/upload.html.twig',
