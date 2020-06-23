@@ -26,7 +26,7 @@ class MapController extends AbstractController
         $form = $this->createForm(
             MapSelectionType::class,
             null,
-            ['action' => $this->generateUrl('route'),
+            [//'action' => $this->generateUrl('route'),
             'method'=>Request::METHOD_GET]
         );
 
