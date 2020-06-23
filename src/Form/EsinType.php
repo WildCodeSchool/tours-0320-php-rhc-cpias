@@ -16,16 +16,6 @@ class EsinType extends AbstractType
         $builder
             ->add('UploadedFile', FileType::class, [
                 'label' => 'Fichier CSV',
-                'constraints' => [
-                    new File([
-                        'mimeTypes' =>[
-                            'text/csv',
-                            'text/plain',
-                        ],
-                        'mimeTypesMessage' => 'Ce n\'est pas un fichier CSV',
-                    ])
-                ],
-
             ])
             
         ;
