@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/strain")
@@ -29,6 +30,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/new", name="strain_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @return Response
      */
@@ -66,6 +68,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="strain_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @param Strain $strain
      * @return Response
@@ -89,6 +92,7 @@ class StrainController extends AbstractController
 
     /**
      * @Route("/{id}", name="strain_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
      * @param Strain $strain
      * @return Response

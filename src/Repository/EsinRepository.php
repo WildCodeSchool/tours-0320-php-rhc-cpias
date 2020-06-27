@@ -2,8 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\SignalementEsin;
-use App\Entity\EsinSuite;
+use App\Entity\Esin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -13,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method SignalementEsin[]    findAll()
  * @method SignalementEsin[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SignalementEsinRepository extends ServiceEntityRepository
+class EsinRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SignalementEsin::class);
+        parent::__construct($registry, Esin::class);
     }
 
     // /**
