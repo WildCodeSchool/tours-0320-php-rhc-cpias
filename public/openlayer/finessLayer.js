@@ -10,7 +10,7 @@ let sourceReg= new ol.source.Vector({
 let sourceOSM = new ol.source.OSM();
 
 
-// instanciation des différentes Layers (couches) de donnée de la carte. 
+// instanciation des différentes Layers (couches) de données de la carte. 
 
 let centre = new ol.layer.Vector({
 	source: sourceReg
