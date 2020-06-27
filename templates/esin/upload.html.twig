@@ -1,11 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block body %}    
-<h1>Charger un fichier e sin</h1>
-        {% if form.vars.submitted %}
-                <p>{{ validationMessage }}</p>
-        {% else %}
-                <p>{{ errorMessage }}</p>
-        {% endif %}
+{% block body %}
+<h1>Charger un fichier e-sin</h1>
         {{ form_start(form)}}
                 {{ form_widget(form) }}
                 <input class="btn" type="submit" value="Envoyer">

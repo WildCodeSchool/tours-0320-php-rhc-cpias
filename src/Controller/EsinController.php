@@ -30,13 +30,13 @@ class EsinController extends AbstractController
 
 
    /**
-    * @Route("/show", name="esin_show")
+    * @Route("/show/{id}", name="esin_show")
     */
 
-    public function show(EsinRepository $esinRepository): Response
+    public function show(Esin $esin): Response
     {
         return $this->render('esin/show.html.twig', [
-            'esins' => $esinRepository->findAll(),
+            'esin' => $esin,
         ]);
     }
 
@@ -51,12 +51,13 @@ class EsinController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $dataRecovery->recovery($upload->getUploadedFile());
+            return $this->redirectToRoute('esin_index');
         }
+            $this->addFlash('success', 'Chargement du fichier effectué');
+        
         return $this->render(
             'esin/upload.html.twig',
             ['form' => $form->createView(),
-            'validationMessage' => 'Le fichier a bien été recupéré',
-            'errorMessage' => 'Le fichier n\'a pas été recupéré'
 
             ]
         );
