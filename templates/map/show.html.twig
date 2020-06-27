@@ -1,33 +1,109 @@
 {% extends 'base.html.twig' %}
 
-% block title %}Carte{% endblock %}
+{% block title %}Carte{% endblock %}
+
 {% block scriptOpenLayers %}
-    {# les scripts js d'openlayer sont ajouté depuis "/asset" car il y a des incompatibilités avec le compileur de webpack#}
+    {# les scripts js d'openlayer sont ajouté depuis "/asset" car il y a des incompatibilités avec le compileur de webpack #}
     <script src="/openlayer/ol.js"></script>
 {% endblock %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('ol') }}
     {{ encore_entry_link_tags('carte') }}
 {% endblock %}
+
 {% block body %}
 
-    {#balise d'affichage de la carte#}
+    {# balise d'affichage de la carte #}
     <div class="container-lg">
         <h1>Carte des établissements</h1>
         <p>cliquez sur le nom pour afficher les souches et les signalements rataché à cet établissement</p>
         <div id="map" class="map"></div>
     </div>
 
-    {#balises récupérées par le finessLayer.js pour afficher les ponctuels et les liens #}
+    {# balises récupérées par le finessLayer.js pour afficher les ponctuels et les liens #}
     {% for etab in finess %}
         <div class="ponctuel" style="display: none;">
-            <a class="label" id="label" target="_blank" href="/map/strainByFiness/{{ etab.id }}">{{ etab.etablissement }}</a>
+            <a class="label" id="label" target="_blank" href="/map/strainEsinByFiness/{{ etab.id }}/{{ etab.finess }}">{{ etab.etablissement }}</a>
             <div class = "marker" id="marker" title="Marker"></div>
             <div class ="coord">{{ etab.coordinates }}</div>
         </div>
     {% endfor %}
 
-    
+    {# tableau d'affichage des souches #}
+    <div class="tabSouches">
+        <h1>Liste des résultats</h1>
+        {% if is_granted('ROLE_TECHNICIAN') %}
+            <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
+        {%  endif %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">CRENO</th>
+                <th scope="col">Etablissement</th>
+                <th scope="col">Date de prélèvement</th>
+                <th scope="col">Type de prélèvement</th>
+                <th scope="col">Micro-Organisme</th>
+                <th scope="col">Resistance</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for strain in strains %}
+                <tr>
+                    <th scope="row">{{ strain.creno }}</th>
+                    <td>{{ strain.finess.etablissement }}</td>
+                    <td>{{ strain.datePrelevement ? strain.datePrelevement|date('d-m-Y') : '' }}</td>
+                    <td>{{ strain.typePrelevement }}</td>
+                    <td>{{ strain.microOrganisme }}</td>
+                    <td>{{ strain.resistance }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
+                        {% if is_granted('ROLE_TECHNICIAN') %}
+                            <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
+                        {%endif%}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun résultat à afficher</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# Tableau d'affiche des signalements esin #}
+    <div class="TabEsin">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">identifiant de la fiche</th>
+                <th scope="col">Emission de la fiche</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            {% for esin in esins %}
+                <tr>
+                    <th scope="row">{{ esin.identifiantDeLaFiche }}</th>
+                    <th scope="row">{{ esin.emissionDeLaFiche ? esin.emissionDeLaFiche|date('d-m-Y') : '' }}</th>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('esin_show', {'id': esin.id}) }}">Afficher</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun résultat à afficher</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if is_granted('ROLE_TECHNICIAN') %}
+            <a class="btn btn-success" href="{{ path('esin_new') }}">Ajouter un signalement e-sin</a>
+        {% endif %}
+    </div>
+
 
 {% endblock %}
 
