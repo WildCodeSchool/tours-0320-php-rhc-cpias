@@ -54,9 +54,9 @@ class Esin
     private $episodePrecedent;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      * @Assert\NotBlank()
-     * @Assert\Choice({"oui", "non", "Oui", "Non"})
+     * @Assert\Positive
      */
     private $envoiAuCnr;
 
