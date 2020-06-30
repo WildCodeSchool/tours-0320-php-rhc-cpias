@@ -6,6 +6,7 @@ use App\Form\MapSelectionType;
 use App\Entity\Strain;
 use App\Entity\Finess;
 use App\Entity\Esin;
+use App\Repository\StrainRepository;
 use App\Repository\FinessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,21 +23,39 @@ class MapController extends AbstractController
      * @param FinessRepository $finessRepository
      * @return Response
      */
-    public function index(FinessRepository $finessRepository): Response
+    public function index(FinessRepository $finessRepository, Request $request, StrainRepository $strainRepo): Response
     {
         $form = $this->createForm(
             MapSelectionType::class,
             null,
-            [//'action' => $this->generateUrl('route'),
+            [//'action' => $this->generateUrl('select'),
             'method'=>Request::METHOD_GET]
         );
 
-        $fine = $finessRepository->findAll();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            if ($data['microOrganisme']== 'Laisser vide') {
+                $fine = $finessRepository->findAll();
+            } else {
+                $strain = $strainRepo->findBy(['microOrganisme' => $data['microOrganisme']]);
+                var_dump($strain);
+                $finessByStrain = $strain[0]->getFiness();
+                if ($finessByStrain !== null) {
+                    $finessByStrain->getId();
+                }
+                $fine = $finessRepository->findBy(['id' => $finessByStrain]);
+            }
+        } else {
+            $fine = $finessRepository->findAll();
+        }
+
         return $this->render('map/index.html.twig', [
             'finess' => $fine,
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @param int $finess
