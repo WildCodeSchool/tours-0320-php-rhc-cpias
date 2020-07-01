@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\StrainName;
 use App\Form\MapSelectionType;
 use App\Entity\Strain;
 use App\Entity\Finess;
@@ -29,27 +30,29 @@ class MapController extends AbstractController
      */
     public function index(FinessRepository $finessRepository, Request $request, StrainRepository $strainRepo): Response
     {
+        $strainName = new StrainName();
+
         $form = $this->createForm(
             MapSelectionType::class,
-            null,
+            $strainName,
             ['method'=>Request::METHOD_GET]
         );
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
             // si le form est vide le controlleur renvoie tt les établissements
-            if ($data['microOrganisme']== 'Laisser vide') {
+            $microOrganisme = $strainName->GetMicroOrganisme();
+            if ($microOrganisme === 'null') {
                 $fine = $finessRepository->findAll();
             //sinon il affiche les établissement dans lesquel la souche selectionnée a été trouvée
             } else {
                 //un établissement contient plusieurs souche, récupération des souches qui ont le nom envoyé par le form
-                $strains = $strainRepo->findBy(['microOrganisme' => $data['microOrganisme']]);
+                $strains = $strainRepo->findBy(['microOrganisme' => $microOrganisme]);
                 //pour chaque souche récupération l'établissement auquel elle est ratachée
                 $fine=[];
                 foreach ($strains as $strain) {
                     $hopital=$strain->getFiness();
-                    if (in_array($hopital, $fine)==false) {
+                    if (in_array($hopital, $fine)===false) {
                         array_push($fine, $hopital);
                     }
                 }

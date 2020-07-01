@@ -17,7 +17,9 @@
         {{ form_start(form) }}
         {{ form_row(form.microOrganisme) }}
         {#{{ form_row(form.resistance) }}#}
-        <button type="submit" name="btnSearch">Rechercher</button>
+        <div class="flexbut">
+            <button type="submit" name="btnSearch">Rechercher</button>
+        </div>
         {{ form_end(form) }}
 
         <div id="map" class="map"></div>
