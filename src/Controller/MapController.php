@@ -18,6 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MapController extends AbstractController
 {
+
+    //Affiche les entité "finness" sur la carte en fonction du tri
+    //et toutes les entités si il n'y a pas de tri
+
     /**
      * @Route("/", name="finess_map", methods={"GET"})
      * @param FinessRepository $finessRepository
@@ -28,23 +32,27 @@ class MapController extends AbstractController
         $form = $this->createForm(
             MapSelectionType::class,
             null,
-            [//'action' => $this->generateUrl('select'),
-            'method'=>Request::METHOD_GET]
+            ['method'=>Request::METHOD_GET]
         );
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $data = $form->getData();
+            // si le form est vide le controlleur renvoie tt les établissements
             if ($data['microOrganisme']== 'Laisser vide') {
                 $fine = $finessRepository->findAll();
+            //sinon il affiche les établissement dans lesquel la souche selectionnée a été trouvée
             } else {
-                $strain = $strainRepo->findBy(['microOrganisme' => $data['microOrganisme']]);
-                var_dump($strain);
-                $finessByStrain = $strain[0]->getFiness();
-                if ($finessByStrain !== null) {
-                    $finessByStrain->getId();
+                //un établissement contient plusieurs souche, récupération des souches qui ont le nom envoyé par le form
+                $strains = $strainRepo->findBy(['microOrganisme' => $data['microOrganisme']]);
+                //pour chaque souche récupération l'établissement auquel elle est ratachée
+                $fine=[];
+                foreach ($strains as $strain) {
+                    $hopital=$strain->getFiness();
+                    if (in_array($hopital, $fine)==false) {
+                        array_push($fine, $hopital);
+                    }
                 }
-                $fine = $finessRepository->findBy(['id' => $finessByStrain]);
             }
         } else {
             $fine = $finessRepository->findAll();
@@ -56,6 +64,8 @@ class MapController extends AbstractController
         ]);
     }
 
+
+    // renvoie la "page d'acceuil" de la carte
 
     /**
      * @param int $finess
@@ -71,6 +81,11 @@ class MapController extends AbstractController
             'strains' => $strains
         ]);
     }
+
+
+    //Est appelé quand on clique sur le nom d'un établissement sur la carte,
+    //renvoie la carte ainsi que toutes les souches et tous les signalements associés
+    // à l'établissement cliqué
 
     /**
      * @param int $numFiness
