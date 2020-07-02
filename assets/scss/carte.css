@@ -28,9 +28,18 @@ button{
     justify-content: center;
 }
 
+.tabSouches{
+        margin-bottom: 20px;
+    }
+
 @media screen and (max-width: 540px ){
 
     button{
         padding:15px;
     }
+
+    .map{
+        height: 400px;
+    }
+
 }
