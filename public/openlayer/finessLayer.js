@@ -28,7 +28,7 @@ let map = new ol.Map({
 	layers: [OSMlayer,centre],
 	view: new ol.View({
 		center: ol.proj.fromLonLat([1.67,47.6]),
-		zoom: 8
+		zoom: 8.2
 	})
 });
 
