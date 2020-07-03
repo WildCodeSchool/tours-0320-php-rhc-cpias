@@ -10,14 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Upload;
 use App\Entity\Esin;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\EsinRepository;
 
 class DataRecovery
 {
     private $entityManager;
+    
+    private $esinRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EsinRepository $esinRepository)
     {
         $this->entityManager = $entityManager;
+        $this->esinRepository = $esinRepository;
     }
     
     public function recovery(UploadedFile $file)
@@ -29,7 +33,18 @@ class DataRecovery
                 $record = fgetcsv($openFile, 0, ";", '"');
                 //on saute la première ligne qui contient les intitulés des champs
                 $record = fgetcsv($openFile, 0, ";", '"');
-                while ($record!== false) {
+                while ($record!== false && $record!== null) {
+                    // Vérifier qu'il y a au moins 96 cases dans $record
+                    
+                    if (count($record) < 96) {
+                        // Sinon, on a pas un fichier au bon format --> message d'erreur
+                        return "Le csv n'est pas au bon format, il manque des cases";
+                    }
+                    //$esin = $esinRepository->findOneby([0]);
+                    //$esin = $esinRepository->findOneby([3]);
+                    // on récupère le champs 0 idFiche et le champs 3 emissionFiche
+                    // Si besoin converti champs 3 au bon format
+                    // On recupère dans la base l'entité pour lesquels le champs id vaut celui qu'on a récup au dessus
                     $esin = new Esin();
                     $esin ->setIdentifiantDeLaFiche($record[0]);
                     $esin ->setStringDerniereModif($record[2]);

@@ -6,9 +6,14 @@ use App\Repository\EsinRepository;
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=EsinRepository::class)
+ * @UniqueEntity(
+ *     fields={"identifiantDeLaFiche", "emissionDeLaFiche"},
+ *     message="Cette fiche a déjà été rentrée"
+ * )
  */
 class Esin
 {
