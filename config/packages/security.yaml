@@ -40,6 +40,7 @@ security:
     access_control:
         - { path: ^/strain, roles: ROLE_USER }
         - { path: ^/finess, roles: ROLE_USER }
-        - { path: ^/upload, roles: ROLE_USER }
+        - { path: ^/map, roles: ROLE_USER }
+        - { path: ^/esin, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
