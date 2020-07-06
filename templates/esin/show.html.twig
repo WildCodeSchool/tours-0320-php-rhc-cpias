@@ -3,10 +3,12 @@
 {% block title %}Détail du signalement e-sin{% endblock %}
 
 {% block body %}
-    <h1>Détail du signalement e-sin</h1>
+
+    <h1 class = "titreListe">Détail du signalement e-sin</h1>
     <a class="btn btn-info" href="{{ path('esin_index') }}">Retour</a>
-    <table class="table table-hover">
     
+    <table class="table table-hover">
+
         <tr>
             <th>Identifiant de la fiche</th>
             <td>{{ esin.identifiantDeLaFiche }}</td>
