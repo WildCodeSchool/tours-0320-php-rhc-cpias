@@ -5,6 +5,7 @@ namespace App\Model;
 use App\Repository\UploadRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Upload
 {
