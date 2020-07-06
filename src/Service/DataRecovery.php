@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use App\Form\UploadType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +25,7 @@ class DataRecovery
         $this->esinRepository = $esinRepository;
     }
     
-    public function recovery(UploadedFile $file)
+    public function recovery(File $file)
     {
         if ($file->getRealPath() !== false) {
             $openFile = fopen($file->getRealPath(), 'r');
