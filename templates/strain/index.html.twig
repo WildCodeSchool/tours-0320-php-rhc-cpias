@@ -3,7 +3,7 @@
 {% block title %}Liste des résultats{% endblock %}
 
 {% block body %}
-    <h1>Liste des résultats</h1>
+    <h1 class = "titreListe" >Liste des résultats</h1>
     {% if is_granted('ROLE_TECHNICIAN') %}
         <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
     {%  endif %}
