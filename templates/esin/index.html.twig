@@ -8,7 +8,7 @@
                 {{ message }}
             </div>
         {% endfor %}
-    <h1>Liste des signalements e-sin</h1>
+    <h1 class = "titreListe">Liste des signalements e-sin</h1>
 
     <table class="table table-hover">
         <thead>
@@ -33,7 +33,7 @@
         {% endfor %}
         </tbody>
     </table>
-   
+
         {% if is_granted('ROLE_TECHNICIAN') %}
         <a class="btn btn-success" href="{{ path('esin_new') }}">Ajouter un signalement e-sin</a>
         {% endif %}
