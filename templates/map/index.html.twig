@@ -14,11 +14,19 @@
         <h1>Carte des établissements</h1>
         <p>cliquez sur le nom pour afficher les souches et les signalements rataché à cet établissement</p>
 
+        {{ form_start(form) }}
+        {{ form_row(form.microOrganisme) }}
+        {#{{ form_row(form.resistance) }}#}
+        <div class="flexbut">
+            <button type="submit" name="btnSearch">Rechercher</button>
+        </div>
+        {{ form_end(form) }}
+
         <div id="map" class="map"></div>
     </div>
     {% for etab in finess %}
         <div class="ponctuel" style="display: none;">
-            <a class="label" id="label" target="_blank" href="/map/strainByFiness/{{ etab.id }}">{{ etab.etablissement }}</a>
+            <a class="label" id="label" target="_blank" href="/map/strainEsinByFiness/{{ etab.id }}/{{ etab.finess }}">{{ etab.etablissement }}</a>
             <div class = "marker" id="marker" title="Marker"></div>
             <div class ="coord">{{ etab.coordinates }}</div>
         </div>

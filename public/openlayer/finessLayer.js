@@ -10,7 +10,7 @@ let sourceReg= new ol.source.Vector({
 let sourceOSM = new ol.source.OSM();
 
 
-// instanciation des différentes Layers (couches) de donnée de la carte. 
+// instanciation des différentes Layers (couches) de données de la carte. 
 
 let centre = new ol.layer.Vector({
 	source: sourceReg
@@ -28,7 +28,7 @@ let map = new ol.Map({
 	layers: [OSMlayer,centre],
 	view: new ol.View({
 		center: ol.proj.fromLonLat([1.67,47.6]),
-		zoom: 8
+		zoom: 8.2
 	})
 });
 
