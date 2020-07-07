@@ -3,18 +3,28 @@
 namespace App\Model;
 
 use App\Repository\UploadRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Upload
 {
+
+    /**
+     * @Assert\NotBlank(message="Merci de joindre un fichier")
+     * @Assert\File(
+     *        mimeTypes = {"text/plain"},
+     *        mimeTypesMessage = "Veuillez joindre un fichier CSV.")
+     */
     private $uploadedFile;
 
 
-    public function getUploadedFile()
+    public function getUploadedFile() : ?File
     {
         return $this->uploadedFile;
     }
 
-    public function setUploadedFile($uploadedFile): self
+    public function setUploadedFile(File $uploadedFile): self
     {
         $this->uploadedFile = $uploadedFile;
 
