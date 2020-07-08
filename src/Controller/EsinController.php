@@ -55,8 +55,9 @@ class EsinController extends AbstractController
                 $dataRecovery->recovery($file);
                 return $this->redirectToRoute('esin_index');
             }
-        }
             $this->addFlash('success', 'Chargement du fichier effectué');
+        }
+            
         
         return $this->render(
             'esin/upload.html.twig',

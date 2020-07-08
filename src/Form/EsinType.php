@@ -15,6 +15,7 @@ class EsinType extends AbstractType
         $builder
             ->add('UploadedFile', FileType::class, [
                 'label' => 'Fichier CSV',
+                'attr' => ['placeholder' => 'Insérez votre fichier'],
             ])
             
         ;

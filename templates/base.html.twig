@@ -5,7 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# block scriptOpenLayers à laisser vide #}
         {% block scriptOpenLayers %}{% endblock %}
-        <link rel="stylesheet" href="build/css/app.scss">
+        <link rel="stylesheet" href="build/css/app.css">
         {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}
 
@@ -28,5 +28,7 @@
         {{ encore_entry_script_tags('app') }}
 
     </body>
-    <footer>{% include 'footer.html.twig' %}</footer>
+
+    <footer>{% include 'footer.html.twig'%} </footer>
+
 </html>
