@@ -3,11 +3,12 @@
 {% block title %}Edit Finess{% endblock %}
 
 {% block body %}
-    <h1>Edit Finess</h1>
+    <p>Utilisateur connecté : {{ app.user.username }}</p>
+    <h1 class = "titreListe">Modifier établissement</h1>
 
-    {{ include('finess/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('finess/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('finess_index') }}">back to list</a>
+    <a class="btn btn-info" href="{{ path('finess_index') }}">Retour</a>
 
     {{ include('finess/_delete_form.html.twig') }}
 {% endblock %}
