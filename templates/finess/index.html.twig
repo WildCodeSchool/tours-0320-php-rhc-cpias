@@ -1,27 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Finess index{% endblock %}
+{% block title %}Etablissement{% endblock %}
 
 {% block body %}
-    <h1>Finess index</h1>
-
-    <table class="table">
+    <h1 class = "titreListe" >Liste des résultats</h1>
+    {% if is_granted('ROLE_TECHNICIAN') %}
+        <a class="btn btn-success" href="{{ path('finess_new') }}">Ajouter un nouvel établissement</a>
+    {%  endif %}
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Etablissement</th>
-                <th>Adresse</th>
-                <th>CodePostal</th>
-                <th>Ville</th>
-                <th>Finess</th>
-                <th>Coordinates</th>
-                <th>actions</th>
+                <th scope="col">Id</th>
+                <th scope="col">Etablissement</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">CodePostal</th>
+                <th scope="col" >Ville</th>
+                <th scope="col">Finess</th>
+                <th scope="col" >Coordinates</th>
+                <th scope="col" >actions</th>
             </tr>
         </thead>
         <tbody>
         {% for finess in finesses %}
             <tr>
-                <td>{{ finess.id }}</td>
+                <th scope="row">{{ finess.id }}</th>
                 <td>{{ finess.etablissement }}</td>
                 <td>{{ finess.adresse }}</td>
                 <td>{{ finess.codePostal }}</td>
@@ -29,13 +31,15 @@
                 <td>{{ finess.finess }}</td>
                 <td>{{ finess.coordinates }}</td>
                 <td>
-                    <a href="{{ path('finess_show', {'id': finess.id}) }}">show</a>
-                    <a href="{{ path('finess_edit', {'id': finess.id}) }}">edit</a>
+                    <a class="btn btn-info" href="{{ path('finess_show', {'id': finess.id}) }}">Afficher</a>
+                    {% if is_granted('ROLE_TECHNICIAN') %}
+                        <a class="btn btn-warning" href="{{ path('finess_edit', {'id': finess.id}) }}">Modifier</a>
+                    {%endif%}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Aucun résultat à afficher</td>
             </tr>
         {% endfor %}
         </tbody>

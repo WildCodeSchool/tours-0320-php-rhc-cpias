@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Finess{% endblock %}
+{% block title %}Etablissement{% endblock %}
 
 {% block body %}
-    <h1>Finess</h1>
-
-    <table class="table">
+    <section class="card text-dark m-3">
+        <div class="card-header bg-light">
+            <h1 class = "titreListe">{{ finess.etablissement }}</h1>
+        </div>
+    <table class="table table-hover">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -38,9 +40,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('finess_index') }}">back to list</a>
+    <a href="{{ path('finess_index') }}">Retour</a>
 
-    <a href="{{ path('finess_edit', {'id': finess.id}) }}">edit</a>
+    <a href="{{ path('finess_edit', {'id': finess.id}) }}">Modifier</a>
 
     {{ include('finess/_delete_form.html.twig') }}
 {% endblock %}

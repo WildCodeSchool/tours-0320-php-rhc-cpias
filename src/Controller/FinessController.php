@@ -91,4 +91,26 @@ class FinessController extends AbstractController
 
         return $this->redirectToRoute('finess_index');
     }
+
+    /*
+    public function find(Request $request, FindFiness $finess)
+    {
+        $upload = new Upload();
+        $form = $this->createForm(FinessType::class, $upload);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $upload->getUploadedFile();
+            if ($file !== null) {
+                $finess->finess($file);
+                return $this->redirectToRoute('finess_map');
+            }
+        }
+
+        return $this->render(
+            'finess/upload.html.twig',
+            ['form' => $form->createView(),
+
+            ]
+        );
+    }*/
 }
