@@ -94,4 +94,3 @@ class FinessFixtures extends Fixture
         $manager->flush();
     }
 }
-
