@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finess{% endblock %}
+
+{% block body %}
+    <h1>Finess</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ finess.id }}</td>
+            </tr>
+            <tr>
+                <th>Etablissement</th>
+                <td>{{ finess.etablissement }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ finess.adresse }}</td>
+            </tr>
+            <tr>
+                <th>CodePostal</th>
+                <td>{{ finess.codePostal }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ finess.ville }}</td>
+            </tr>
+            <tr>
+                <th>Finess</th>
+                <td>{{ finess.finess }}</td>
+            </tr>
+            <tr>
+                <th>Coordinates</th>
+                <td>{{ finess.coordinates }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('finess_index') }}">back to list</a>
+
+    <a href="{{ path('finess_edit', {'id': finess.id}) }}">edit</a>
+
+    {{ include('finess/_delete_form.html.twig') }}
+{% endblock %}

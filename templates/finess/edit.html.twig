@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer{% endblock %}
+{% block title %}Edit Finess{% endblock %}
 
 {% block body %}
-    <h1>Modifier un établissement</h1>
+    <h1>Edit Finess</h1>
 
-    {{ include('finess/_form.html.twig', {'button_label': 'Editer'}) }}
+    {{ include('finess/_form.html.twig', {'button_label': 'Update'}) }}
 
-  
+    <a href="{{ path('finess_index') }}">back to list</a>
 
+    {{ include('finess/_delete_form.html.twig') }}
 {% endblock %}

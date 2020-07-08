@@ -2,23 +2,31 @@
 
 namespace App\Controller;
 
-use App\Form\FinessType;
 use App\Entity\Finess;
+use App\Form\FinessType;
+use App\Repository\FinessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Service\FindFiness;
-use App\Model\Upload;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/finess")
+ */
 class FinessController extends AbstractController
 {
+    /**
+     * @Route("/", name="finess_index", methods={"GET"})
+     */
+    public function index(FinessRepository $finessRepository): Response
+    {
+        return $this->render('finess/index.html.twig', [
+            'finesses' => $finessRepository->findAll(),
+        ]);
+    }
 
-     /**
-     * @Route("finess/new", name="finess_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
+    /**
+     * @Route("/new", name="finess_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -31,7 +39,7 @@ class FinessController extends AbstractController
             $entityManager->persist($finess);
             $entityManager->flush();
 
-            return $this->redirectToRoute('finess_new');
+            return $this->redirectToRoute('finess_index');
         }
 
         return $this->render('finess/new.html.twig', [
@@ -40,11 +48,18 @@ class FinessController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/finess/edit/{id}", name="finess_edit", methods={"GET","POST"}, requirements ={"id"="\d+"})
-     * @param Request $request
-     * @param Finess $finess
-     * @return Response
+    /**
+     * @Route("/{id}", name="finess_show", methods={"GET"})
+     */
+    public function show(Finess $finess): Response
+    {
+        return $this->render('finess/show.html.twig', [
+            'finess' => $finess,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="finess_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Finess $finess): Response
     {
@@ -53,6 +68,8 @@ class FinessController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('finess_index');
         }
 
         return $this->render('finess/edit.html.twig', [
@@ -62,26 +79,16 @@ class FinessController extends AbstractController
     }
 
     /**
-    * @Route("finess/add", name="finess_add")
-    */
-    public function find(Request $request, FindFiness $finess)
+     * @Route("/{id}", name="finess_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Finess $finess): Response
     {
-        $upload = new Upload();
-        $form = $this->createForm(FinessType::class, $upload);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $file = $upload->getUploadedFile();
-            if ($file !== null) {
-                $finess->finess($file);
-                return $this->redirectToRoute('finess_map');
-            }
+        if ($this->isCsrfTokenValid('delete'.$finess->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($finess);
+            $entityManager->flush();
         }
-        
-        return $this->render(
-            'finess/upload.html.twig',
-            ['form' => $form->createView(),
 
-            ]
-        );
+        return $this->redirectToRoute('finess_index');
     }
 }

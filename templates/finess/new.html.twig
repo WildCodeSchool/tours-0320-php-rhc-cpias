@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enregistrer{% endblock %}
+{% block title %}New Finess{% endblock %}
 
 {% block body %}
-    <h1 class = "titreListe">Ajouter un établissement</h1>
+    <h1>Create new Finess</h1>
 
     {{ include('finess/_form.html.twig') }}
 
-
+    <a href="{{ path('finess_index') }}">back to list</a>
 {% endblock %}

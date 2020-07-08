@@ -1,11 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enregistrer{% endblock %}
+{% block title %}Finess index{% endblock %}
 
 {% block body %}
-    <h1 class = "titreListe">Ajouter un établissement</h1>
+    <h1>Finess index</h1>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Etablissement</th>
+                <th>Adresse</th>
+                <th>CodePostal</th>
+                <th>Ville</th>
+                <th>Finess</th>
+                <th>Coordinates</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for finess in finesses %}
+            <tr>
+                <td>{{ finess.id }}</td>
+                <td>{{ finess.etablissement }}</td>
+                <td>{{ finess.adresse }}</td>
+                <td>{{ finess.codePostal }}</td>
+                <td>{{ finess.ville }}</td>
+                <td>{{ finess.finess }}</td>
+                <td>{{ finess.coordinates }}</td>
+                <td>
+                    <a href="{{ path('finess_show', {'id': finess.id}) }}">show</a>
+                    <a href="{{ path('finess_edit', {'id': finess.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-
-
+    <a href="{{ path('finess_new') }}">Create new</a>
 {% endblock %}
