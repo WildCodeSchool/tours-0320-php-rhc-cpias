@@ -50,8 +50,11 @@ class EsinController extends AbstractController
         $form = $this->createForm(EsinType::class, $upload);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $dataRecovery->recovery($upload->getUploadedFile());
-            return $this->redirectToRoute('esin_index');
+            $file = $upload->getUploadedFile();
+            if ($file !== null) {
+                $dataRecovery->recovery($file);
+                return $this->redirectToRoute('esin_index');
+            }
         }
             $this->addFlash('success', 'Chargement du fichier effectué');
         
