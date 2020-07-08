@@ -25,7 +25,7 @@ class StrainType extends AbstractType
                 'choice_label' => 'etablissement',
                 'expanded' => false,
                 'multiple' => false,
-                'by_reference' => false
+                'by_reference' => true
             ])
             ->add('datePrelevement', DateType::class, [
                 'widget' => 'single_text',
