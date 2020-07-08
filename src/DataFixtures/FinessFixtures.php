@@ -17,7 +17,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('18000');
         $finess->setVille('Bourges');
         $finess->setFiness('180000259');
-        $finess->setCoordinates('47.0867662,2.3858678');
+        $finess->setCoordinates('2.3858678,47.0867662');
         $manager->persist($finess);
         $this->addReference('180000259', $finess);
             
@@ -27,7 +27,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('18100');
         $finess->setVille('Vierzon');
         $finess->setFiness('180007239');
-        $finess->setCoordinates('47.2217489,2.0691421');
+        $finess->setCoordinates('2.0691421,47.2217489');
         $manager->persist($finess);
         $this->addReference('180007239', $finess);
 
@@ -37,7 +37,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('28000');
         $finess->setVille('Chartes');
         $finess->setFiness('280504168');
-        $finess->setCoordinates('48.4376841,1.4953135');
+        $finess->setCoordinates('1.4953135,48.4376841');
         $manager->persist($finess);
         $this->addReference('280504168', $finess);
 
@@ -47,7 +47,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('28100');
         $finess->setVille('Dreux');
         $finess->setFiness('280505009');
-        $finess->setCoordinates('48.7394832,1.3732572');
+        $finess->setCoordinates('1.3732572,48.7394832');
         $manager->persist($finess);
         $this->addReference('280505009', $finess);
 
@@ -57,7 +57,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('28120');
         $finess->setVille('ILLIERS COMBRAY');
         $finess->setFiness('280506015');
-        $finess->setCoordinates('48.2994963,1.2444186');
+        $finess->setCoordinates('1.2444186,48.2994963');
         $manager->persist($finess);
         $this->addReference('280506015', $finess);
 
@@ -67,7 +67,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('37160');
         $finess->setVille('Abilly');
         $finess->setFiness('370000598');
-        $finess->setCoordinates('46.9390792,0.7260646');
+        $finess->setCoordinates('0.7260646,46.9390792');
         $manager->persist($finess);
         $this->addReference('370000598', $finess);
 
@@ -77,7 +77,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('37170');
         $finess->setVille('CHAMBRAY LES TOURS');
         $finess->setFiness('370103681');
-        $finess->setCoordinates('47.33537,0.70286');
+        $finess->setCoordinates('0.70286,47.33537');
         $manager->persist($finess);
         $this->addReference('370103681', $finess);
 
@@ -87,7 +87,7 @@ class FinessFixtures extends Fixture
         $finess->setCodePostal('37210');
         $finess->setVille('Vouvray');
         $finess->setFiness('370011314');
-        $finess->setCoordinates('47.4300463,0.7746737');
+        $finess->setCoordinates('0.7746737,47.4300463');
         $manager->persist($finess);
         $this->addReference('370011314', $finess);
 
