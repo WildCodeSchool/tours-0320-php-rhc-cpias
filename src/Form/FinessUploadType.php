@@ -2,29 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Finess;
+use App\Model\Upload;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class FinessType extends AbstractType
+class FinessUploadType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('etablissement')
-            ->add('adresse')
-            ->add('codePostal')
-            ->add('ville')
-            ->add('finess')
-            ->add('coordinates')
+            ->add('UploadedFile', FileType::class, [
+                'label' => 'Fichier CSV',
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Finess::class,
+            'data_class' => Upload::class,
         ]);
     }
 }
