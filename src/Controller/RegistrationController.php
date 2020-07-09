@@ -91,12 +91,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré.');
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+            return $this->redirectToRoute('finess_map');
         }
 
         return $this->render('registration/register.html.twig', [
