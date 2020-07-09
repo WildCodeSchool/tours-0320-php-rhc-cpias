@@ -168,6 +168,7 @@ class Strain
     /**
      * @ORM\ManyToOne(targetEntity=Finess::class, inversedBy="strains")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Veuillez renseigner un numéro finess")
      */
     private $finess;
 
