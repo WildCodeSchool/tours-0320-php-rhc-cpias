@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etablissement{% endblock %}
+
+{% block body %}
+    <section class="card text-dark m-3">
+        <div class="card-header bg-light">
+            <h1 class = "titreListe">{{ finess.etablissement }}</h1>
+        </div>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th scope="col" >Id</th>
+                <td>{{ finess.id }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Etablissement</th>
+                <td>{{ finess.etablissement }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Adresse</th>
+                <td>{{ finess.adresse }}</td>
+            </tr>
+            <tr>
+                <th scope="col">CodePostal</th>
+                <td>{{ finess.codePostal }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Ville</th>
+                <td>{{ finess.ville }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Finess</th>
+                <td>{{ finess.finess }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Coordinates</th>
+                <td>{{ finess.coordinates }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    </section>
+        {% if is_granted('ROLE_TECHNICIAN') %}
+            <a class="btn btn-warning" href="{{ path('finess_edit', {'id': finess.id}) }}">Modifier</a>
+            {{ include('finess/_delete_form.html.twig') }}
+        {%endif%}
+
+    <a class="btn btn-info" href="{{ path('finess_index') }}">Retour</a>
+
+
+{% endblock %}
