@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FindFiness;
+use App\Model\Upload;
+use App\Form\FinessUploadType;
 
 /**
  * @Route("/finess")
@@ -49,7 +52,7 @@ class FinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="finess_show", methods={"GET"})
+     * @Route("/show/{id}", name="finess_show", methods={"GET"})
      */
     public function show(Finess $finess): Response
     {
@@ -92,7 +95,12 @@ class FinessController extends AbstractController
         return $this->redirectToRoute('finess_index');
     }
 
-    /*
+    /**
+     * @Route("/add", name="finess_upload")
+     * @param Request $request
+     * @param FindFiness $finess
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function find(Request $request, FindFiness $finess)
     {
         $upload = new Upload();
@@ -112,5 +120,5 @@ class FinessController extends AbstractController
 
             ]
         );
-    }*/
+    }
 }
