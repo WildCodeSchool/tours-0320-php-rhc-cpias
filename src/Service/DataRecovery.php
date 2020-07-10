@@ -41,22 +41,19 @@ class DataRecovery
                         // Sinon, on a pas un fichier au bon format --> message d'erreur
                         return "Le csv n'est pas au bon format, il manque des cases";
                     }
-                    
-                    $date=$record[3];
-                    $day = substr($date, 0, 2);
-                    $month = substr($date, 3, 2);
+                   
+                    $date = $record[3];
+                    $day = substr($date, 0, 3);
+                    $month = substr($date, 3, 3);
                     $year = substr($date, 6, 4);
-                    $date = new DateTime($year ."-". $month . "-". $day);
+                    $newDate = new DateTime($month .$day . $year);
                     
 
                     $esin = $this->esinRepository->findOneby(
-                        ['identifiantDeLaFiche'=>$record[0],'emissionDeLaFiche'=>$date]
+                        ['identifiantDeLaFiche'=>$record[0],'emissionDeLaFiche'=>$newDate]
                     );
                     
                     if ($esin === null) {
-                    // on récupère le champs 0 idFiche et le champs 3 emissionFiche
-                    // Si besoin converti champs 3 au bon format
-                    // On recupère dans la base l'entité pour lesquels le champs id vaut celui qu'on a récup au dessus
                         $esin = new Esin();
                         $esin ->setIdentifiantDeLaFiche($record[0]);
                         $esin ->setStringDerniereModif($record[2]);
