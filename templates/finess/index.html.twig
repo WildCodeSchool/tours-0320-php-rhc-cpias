@@ -22,11 +22,11 @@
         </thead>
         <tbody>
         {% for finess in finesses %}
-            <tr>
-                <th scope="row">{{ finess.id }}</th>
+            <tr class = "select">
+                <th scope="row" class="id">{{ finess.id }}</th>
                 <td>{{ finess.etablissement }}</td>
-                <td>{{ finess.adresse }}</td>
-                <td>{{ finess.codePostal }}</td>
+                <td class="adresse">{{ finess.adresse }}</td>
+                <td class="code">{{ finess.codePostal }}</td>
                 <td>{{ finess.ville }}</td>
                 <td>{{ finess.finess }}</td>
                 <td>{{ finess.coordinates }}</td>
@@ -44,5 +44,5 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <script src="/apiGeocodage/apiGeocodage.js"></script>
 {% endblock %}
