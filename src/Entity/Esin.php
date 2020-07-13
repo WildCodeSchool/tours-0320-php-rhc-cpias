@@ -205,7 +205,6 @@ class Esin
         $month = substr($date, 3, 2);
         $year = substr($date, 6, 4);
         $this->emissionDeLaFiche = new DateTime($year ."-". $month . "-". $day);
-        return $this;
     }
 
     public function getDateDerniereModif(): ?\DateTimeInterface
