@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Finess;
 use App\Form\FinessType;
+use App\Form\FinessUploadType;
 use App\Repository\FinessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FindFiness;
 use App\Model\Upload;
-use App\Form\FinessUploadType;
 
 /**
  * @Route("/finess")
@@ -96,20 +96,19 @@ class FinessController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="finess_upload")
-     * @param Request $request
-     * @param FindFiness $finess
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+
+     * @Route("/upload", name="finess_upload")
+
      */
     public function find(Request $request, FindFiness $finess)
     {
         $upload = new Upload();
-        $form = $this->createForm(FinessType::class, $upload);
+        $form = $this->createForm(FinessUploadType::class, $upload);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $upload->getUploadedFile();
             if ($file !== null) {
-                $finess->finess($file);
+                $finess->recovery($file);
                 return $this->redirectToRoute('finess_map');
             }
         }
