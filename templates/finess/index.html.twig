@@ -27,7 +27,7 @@
                 <td>{{ finess.etablissement }}</td>
                 <td class="adresse">{{ finess.adresse }}</td>
                 <td class="code">{{ finess.codePostal }}</td>
-                <td>{{ finess.ville }}</td>
+                <td class ="ville">{{ finess.ville }}</td>
                 <td>{{ finess.finess }}</td>
                 <td>{{ finess.coordinates }}</td>
                 <td>
@@ -44,5 +44,7 @@
         {% endfor %}
         </tbody>
     </table>
+    {#
     <script src="/apiGeocodage/apiGeocodage.js"></script>
+    #}
 {% endblock %}
