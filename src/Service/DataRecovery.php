@@ -29,7 +29,6 @@ class DataRecovery
     {
         if ($file->getRealPath() !== false) {
             $openFile = fopen($file->getRealPath(), 'r');
-    
             if ($openFile !== false) {
                 $record = fgetcsv($openFile, 0, ";", '"');
                 //on saute la première ligne qui contient les intitulés des champs
@@ -38,9 +37,10 @@ class DataRecovery
                     // Vérifier qu'il y a au moins 96 cases dans $record
                     
                     if (count($record) < 96) {
-                        // Sinon, on a pas un fichier au bon format --> message d'erreur
+                    // Sinon, on a pas un fichier au bon format --> message d'erreur
                         return "Le csv n'est pas au bon format, il manque des cases";
                     }
+
                    
                     $date = $record[3];
                     $day = substr($date, 0, 3);
@@ -80,8 +80,9 @@ class DataRecovery
                         $esin ->setPraticienHygiene($record[96]);
                         $record = fgetcsv($openFile, 0, ";", '"');
                         $this->entityManager->persist($esin);
+    
 
-                        $this->entityManager->flush();
+                            $this->entityManager->flush();
                     } else {
                         return "ce fichier à deja été entré";
                     }

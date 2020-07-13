@@ -1,11 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enregistrer{% endblock %}
+{% block title %}Etablissement{% endblock %}
 
 {% block body %}
-    <h1 class = "titreListe">Ajouter un établissement</h1>
-
-
-
+    <h1 class = "titreListe" >Liste des résultats</h1>
+    {% if is_granted('ROLE_TECHNICIAN') %}
+        <a class="btn btn-success" href="{{ path('finess_new') }}">Ajouter un nouvel établissement</a>
+        <a class="btn btn-success" href="{{ path('finess_upload') }}">Importer un fichier d'établissement</a>
+    {%  endif %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Etablissement</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">CodePostal</th>
+                <th scope="col" >Ville</th>
+                <th scope="col">Finess</th>
+                <th scope="col" >Coordinates</th>
+                <th scope="col" >actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for finess in finesses %}
+            <tr>
+                <th scope="row">{{ finess.id }}</th>
+                <td>{{ finess.etablissement }}</td>
+                <td>{{ finess.adresse }}</td>
+                <td>{{ finess.codePostal }}</td>
+                <td>{{ finess.ville }}</td>
+                <td>{{ finess.finess }}</td>
+                <td>{{ finess.coordinates }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('finess_show', {'id': finess.id}) }}">Afficher</a>
+                    {% if is_granted('ROLE_TECHNICIAN') %}
+                        <a class="btn btn-warning" href="{{ path('finess_edit', {'id': finess.id}) }}">Modifier</a>
+                    {%endif%}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun résultat à afficher</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

@@ -24,7 +24,7 @@ class FindFiness
         $this->finessRepository = $finessRepository;
     }
     
-    public function finess(File $file)
+    public function recovery(File $file)
     {
         if ($file->getRealPath() !== false) {
             $openFile = fopen($file->getRealPath(), 'r');
