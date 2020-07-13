@@ -201,15 +201,10 @@ class Esin
 
     public function setEmissionString(string $date)
     {
-        /*
-        $dateString = str_replace("/", "-", $date);
-        try {
-            $this->emissionDeLaFiche = new DateTime($dateString);
-        } catch (Exception $e) {
-            throw new Exception("Le format de la date est erroné");
-        }
-        return $this;
-        */
+        $day = substr($date, 0, 2);
+        $month = substr($date, 3, 2);
+        $year = substr($date, 6, 4);
+        $this->emissionDeLaFiche = new DateTime($year ."-". $month . "-". $day);
     }
 
     public function getDateDerniereModif(): ?\DateTimeInterface
