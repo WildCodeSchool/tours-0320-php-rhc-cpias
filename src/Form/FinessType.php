@@ -19,7 +19,6 @@ class FinessType extends AbstractType
             ->add('codePostal', IntegerType::Class)
             ->add('ville', TextType::class)
             ->add('finess', IntegerType::class)
-            ->add('coordinates', TextType::class)
         ;
     }
 

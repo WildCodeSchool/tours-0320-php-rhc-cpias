@@ -2,6 +2,16 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <button class="btn btn-success" class="btn">{{ button_label|default('Enregistrer') }}</button>
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+
+        <button class="btn btn-success btnCoord ">Mise à jour des coordonnées</button>
+
+        {# div en display none pour passer au javascript les données dont il à besoin #}
+        <div class = "id d-none">{{ finess.id }}</div>
+        <div class = "adresse d-none">{{ finess.adresse }}</div>
+        <div class = "code d-none">{{ finess.codePostal }}</div>
+        <div class = "ville d-none">{{ finess.ville }}</div>
+
+        <script src="/apiGeocodage/apiGeocodageUpdate.js"></script>
 
 </div>
