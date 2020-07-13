@@ -40,47 +40,47 @@ class DataRecovery
                     // Sinon, on a pas un fichier au bon format --> message d'erreur
                         return "Le csv n'est pas au bon format, il manque des cases";
                     }
-                /*
-                try {
-                    $record[3] = new DateTime();
-                } catch (Exception $e) {
-                    throw new Exception("Le format de la date est erroné");
-                }
-                */
+
+                   
+                    $date = $record[3];
+                    $day = substr($date, 0, 3);
+                    $month = substr($date, 3, 3);
+                    $year = substr($date, 6, 4);
+                    $newDate = new DateTime($month .$day . $year);
+                    
+
                     $esin = $this->esinRepository->findOneby(
-                        ['identifiantDeLaFiche'=>$record[0],'emissionDeLaFiche'=>str_replace("/", "-", $record[3])]
+                        ['identifiantDeLaFiche'=>$record[0],'emissionDeLaFiche'=>$newDate]
                     );
                     
                     if ($esin === null) {
-                    // on récupère le champs 0 idFiche et le champs 3 emissionFiche
-                    // Si besoin converti champs 3 au bon format
-                    // On recupère dans la base l'entité pour lesquels le champs id vaut celui qu'on a récup au dessus
-                            $esin = new Esin();
-                            $esin ->setIdentifiantDeLaFiche($record[0]);
-                            $esin ->setStringDerniereModif($record[2]);
-                            $esin ->setEmissionString($record[3]);
-                            $esin ->setStringEpisode($record[9]);
-                            $esin ->setCodeFinessEtab($record[13]);
-                            $esin ->setEnvoiAuCnr($record[32]);
-                            $esin ->setNomCnrOuLabo($record[34]);
-                            $esin ->setNbCas($record[50]);
-                            $esin ->setEpidemieCasGroupes($record[56]);
-                            $esin ->setCaractereNosocomial($record[57]);
-                            $esin ->setOrigineCasImportes($record[63]);
-                            $esin ->setEtabConcernes($record[64]);
-                            $esin ->setAutresEtabs($record[65]);
-                            $esin ->setCodeMicroOrganisme1($record[72]);
-                            $esin ->setCodeMicroOrganisme2($record[74]);
-                            $esin ->setCodeMicroOrganisme3($record[76]);
-                            $esin ->setCodeSiteUn($record[78]);
-                            $esin ->setCodeSiteDeux($record[80]);
-                            $esin ->setCodeSiteTrois($record[82]);
-                            $esin ->setInvestigation($record[85]);
-                            $esin ->setHypotheseCause($record[87]);
-                            $esin ->setJustification($record[95]);
-                            $esin ->setPraticienHygiene($record[96]);
-                            $record = fgetcsv($openFile, 0, ";", '"');
-                            $this->entityManager->persist($esin);
+                        $esin = new Esin();
+                        $esin ->setIdentifiantDeLaFiche($record[0]);
+                        $esin ->setStringDerniereModif($record[2]);
+                        $esin ->setEmissionString($record[3]);
+                        $esin ->setStringEpisode($record[9]);
+                        $esin ->setCodeFinessEtab($record[13]);
+                        $esin ->setEnvoiAuCnr($record[32]);
+                        $esin ->setNomCnrOuLabo($record[34]);
+                        $esin ->setNbCas($record[50]);
+                        $esin ->setEpidemieCasGroupes($record[56]);
+                        $esin ->setCaractereNosocomial($record[57]);
+                        $esin ->setOrigineCasImportes($record[63]);
+                        $esin ->setEtabConcernes($record[64]);
+                        $esin ->setAutresEtabs($record[65]);
+                        $esin ->setCodeMicroOrganisme1($record[72]);
+                        $esin ->setCodeMicroOrganisme2($record[74]);
+                        $esin ->setCodeMicroOrganisme3($record[76]);
+                        $esin ->setCodeSiteUn($record[78]);
+                        $esin ->setCodeSiteDeux($record[80]);
+                        $esin ->setCodeSiteTrois($record[82]);
+                        $esin ->setInvestigation($record[85]);
+                        $esin ->setHypotheseCause($record[87]);
+                        $esin ->setJustification($record[95]);
+                        $esin ->setPraticienHygiene($record[96]);
+                        $record = fgetcsv($openFile, 0, ";", '"');
+                        $this->entityManager->persist($esin);
+    
 
                             $this->entityManager->flush();
                     } else {
