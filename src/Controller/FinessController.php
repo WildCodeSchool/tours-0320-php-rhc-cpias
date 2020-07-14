@@ -71,6 +71,8 @@ class FinessController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            var_dump($_POST);
+            var_dump($_GET);
 
             return $this->redirectToRoute('finess_index');
         }
@@ -119,5 +121,22 @@ class FinessController extends AbstractController
 
             ]
         );
+    }
+
+    /**
+     * @Route("/coord", name="finess_coord", methods={"GET","POST"})
+     */
+    public function updateCoord(Request $request)
+    {
+        //var_dump($_POST);
+        //var_dump($_GET);
+        //$id=10;
+       // $finess = $this->getDoctrine()
+         //   ->getRepository(Finess::class)
+           // ->findby(['id'=>$id]);
+
+        return $this->render('finess/index.html.twig', [
+        'oh no!!!',
+            ]);//$this->redirectToRoute('finess_show',['id'=>$id]);
     }
 }

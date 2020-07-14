@@ -19,4 +19,10 @@ btn.onclick = function() {
             console.log(profile);
             dataTab[id] = profile.features[0].geometry.coordinates;
     })
+
+    const requete = new XMLHttpRequest();
+    requete.open('POST','http://localhost:8000/finess/coord');
+    requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    requete.send('id=1&coord=youpi');
+    //document.location.href="http://localhost:8000/finess/coord";
 }
