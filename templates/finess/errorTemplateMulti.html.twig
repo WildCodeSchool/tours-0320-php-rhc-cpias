@@ -4,11 +4,11 @@
 
 {% block body %}
 
-<h1>Retour de l'Api</h1>
+    <h1>Retour de l'Api</h1>
 
     <ul>
         {% for error in errors %}
-            <li> <a class="btn btn-warning" href="{{ path('finess_edit', {'id': etab.id}) }}">{{ error }}</a></li>
+            <li> <a class="btn btn-warning" href="{{ path('finess_edit', {'id': error.1}) }}">{{ error.0 }}</a></li>
         {% endfor %}
     </ul>
 
