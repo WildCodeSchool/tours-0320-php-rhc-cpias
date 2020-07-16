@@ -153,8 +153,9 @@ class FinessController extends AbstractController
             $finess->setCoordinates($coords);
             $this->getDoctrine()->getManager()->flush();
         } else {
-            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'a pas rouvé 
-            d'adresse pour l'établissement " . $id . " , veuillez la rechercher manuellement."],'etab'=>$finess]);
+            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'a pas trouvé 
+            d'adresse pour l'établissement " . $id . ", veuillez rechercher les coordonnées manuellement."],
+                'etab'=>$finess]);
         }
 
 
@@ -167,6 +168,7 @@ class FinessController extends AbstractController
     public function allCoords(FinessRepository $finessRepository)
     {
         $finess = $finessRepository->findAll();
+        $tabError=[];
 
         foreach ($finess as $etab) {
             $ville = $etab->getVille();
@@ -179,13 +181,12 @@ class FinessController extends AbstractController
             $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " "
                 . $ville . "&postcode=" . $codePostal . "&limit=1";
 
-            $tabError=[];
-
             try {
                 $response = $client->request('GET', $url);
                 $content = $response->toArray();
             } catch (ExceptionInterface $e) {
-                array_push($tabError, ["la connection à échoué pour l'établissement" . $id]);
+                array_push($tabError, ["la connection à échoué pour l'établissement" . $id .
+                 " veuillez rechercher les coordonnées manuellement"]);
                 continue;
             }
 
@@ -195,12 +196,16 @@ class FinessController extends AbstractController
                 $etab->setCoordinates($coords);
                 $this->getDoctrine()->getManager()->flush();
             } else {
-                array_push($tabError, ["l'Api n'a pas trouvé d'adresse pour l'établissement" . $id]);
+                array_push($tabError, ["l'Api n'a pas trouvé d'adresse pour l'établissement " . $id .
+                    " , veuillez rechercher les coordonnées manuellement.", $id]);
             }
-
             sleep(1);
         }
 
-        return $this->redirectToRoute('finess_index');
+        if (empty($tabError) === false) {
+            return $this->render('finess/errorTemplateMulti.html.twig', ['errors'=>$tabError]);
+        } else {
+            return $this->redirectToRoute('finess_index');
+        }
     }
 }
