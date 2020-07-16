@@ -7,11 +7,14 @@ use App\Form\FinessType;
 use App\Form\FinessUploadType;
 use App\Repository\FinessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Exception\ExceptionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FindFiness;
 use App\Model\Upload;
+use Symfony\Component\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\HttpClient;
 
 /**
  * @Route("/finess")
@@ -71,8 +74,6 @@ class FinessController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            var_dump($_POST);
-            var_dump($_GET);
 
             return $this->redirectToRoute('finess_index');
         }
@@ -124,19 +125,69 @@ class FinessController extends AbstractController
     }
 
     /**
-     * @Route("/coord", name="finess_coord", methods={"GET","POST"})
+     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+"})
      */
-    public function updateCoord(Request $request)
+    public function updateCoord(Finess $finess)
     {
-        //var_dump($_POST);
-        //var_dump($_GET);
-        //$id=10;
-       // $finess = $this->getDoctrine()
-         //   ->getRepository(Finess::class)
-           // ->findby(['id'=>$id]);
 
-        return $this->render('finess/index.html.twig', [
-        'oh no!!!',
-            ]);//$this->redirectToRoute('finess_show',['id'=>$id]);
+        $ville=$finess->getVille();
+        $adresse=$finess->getAdresse();
+        $id=$finess->getId();
+        $codePostal=$finess->getCodePostal();
+
+        $client = HttpClient::create();
+        $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " " . $ville .
+            "&postcode=" . $codePostal . "&limit=1";
+
+        try {
+            $response = $client->request('GET', $url);
+            $content = $response->toArray();
+        } catch (ExceptionInterface $e) {
+            return $this->render('finess/errorTemplate.html.twig', ['error'=>"La connection à l'Api è échouée, 
+                   veuillez entrer les coordonnées manuellement."]);
+        }
+
+        if (isset($content["features"][0]['geometry']['coordinates'])) {
+            $coordsTab = $content["features"][0]['geometry']['coordinates'];
+            $coords = $coordsTab[0] . "," . $coordsTab[1];
+            $finess->setCoordinates($coords);
+            $this->getDoctrine()->getManager()->flush();
+        } else {
+            return $this->render('finess/errorTemplate.html.twig', ['error'=>"L'Api n'a pas rouvé d'adresse, 
+                   veuillez la rechercher manuellement."]);
+        }
+
+
+        return $this->redirectToRoute('finess_show', ['id'=>$id]);
+    }
+
+    /**
+     * @Route("/allcoords", name="AllCoord", methods={"GET","POST"})
+     */
+    public function allCoords(FinessRepository $finessRepository)
+    {
+        $finess = $finessRepository->findAll();
+
+        foreach ($finess as $etab) {
+            $ville = $etab->getVille();
+            $adresse = $etab->getAdresse();
+            $codePostal = $etab->getCodePostal();
+
+            $client = HttpClient::create();
+            $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " "
+                . $ville . "&postcode=" . $codePostal . "&limit=1";
+            $response = $client->request('GET', $url);
+
+            $content = $response->toArray();
+
+            $coordsTab = $content["features"][0]['geometry']['coordinates'];
+            $coords = $coordsTab[0] . "," . $coordsTab[1];
+            $etab->setCoordinates($coords);
+            $this->getDoctrine()->getManager()->flush();
+
+            sleep(2);
+        }
+
+        return $this->redirectToRoute('finess_index');
     }
 }
