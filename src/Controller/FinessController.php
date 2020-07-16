@@ -7,11 +7,14 @@ use App\Form\FinessType;
 use App\Form\FinessUploadType;
 use App\Repository\FinessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Exception\ExceptionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FindFiness;
 use App\Model\Upload;
+use Symfony\Component\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\HttpClient;
 
 /**
  * @Route("/finess")
@@ -52,7 +55,6 @@ class FinessController extends AbstractController
     }
 
     /**
-     *
      * @Route("/show/{id}", name="finess_show", methods={"GET"})
      */
     public function show(Finess $finess): Response
@@ -97,7 +99,9 @@ class FinessController extends AbstractController
     }
 
     /**
+
      * @Route("/upload", name="finess_upload")
+
      */
     public function find(Request $request, FindFiness $finess)
     {
@@ -118,5 +122,90 @@ class FinessController extends AbstractController
 
             ]
         );
+    }
+
+    /**
+     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+"})
+     */
+    public function updateCoord(Finess $finess)
+    {
+
+        $ville=$finess->getVille();
+        $adresse=$finess->getAdresse();
+        $id=$finess->getId();
+        $codePostal=$finess->getCodePostal();
+
+        $client = HttpClient::create();
+        $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " " . $ville .
+            "&postcode=" . $codePostal . "&limit=1";
+
+        try {
+            $response = $client->request('GET', $url);
+            $content = $response->toArray();
+        } catch (ExceptionInterface $e) {
+            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'est pas disponible,
+             veuillez trouvé l'adresse pour l'établissement " . $id . " , manuellement."], 'etab'=>$finess]);
+        }
+
+        if (isset($content["features"][0]['geometry']['coordinates'])) {
+            $coordsTab = $content["features"][0]['geometry']['coordinates'];
+            $coords = $coordsTab[0] . "," . $coordsTab[1];
+            $finess->setCoordinates($coords);
+            $this->getDoctrine()->getManager()->flush();
+        } else {
+            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'a pas trouvé 
+            d'adresse pour l'établissement " . $id . ", veuillez rechercher les coordonnées manuellement."],
+                'etab'=>$finess]);
+        }
+
+
+        return $this->redirectToRoute('finess_show', ['id'=>$id]);
+    }
+
+    /**
+     * @Route("/allcoords", name="AllCoord", methods={"GET","POST"})
+     */
+    public function allCoords(FinessRepository $finessRepository)
+    {
+        $finess = $finessRepository->findAll();
+        $tabError=[];
+
+        foreach ($finess as $etab) {
+            $ville = $etab->getVille();
+            $adresse = $etab->getAdresse();
+            $codePostal = $etab->getCodePostal();
+            $id = $etab->getId();
+
+
+            $client = HttpClient::create();
+            $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " "
+                . $ville . "&postcode=" . $codePostal . "&limit=1";
+
+            try {
+                $response = $client->request('GET', $url);
+                $content = $response->toArray();
+            } catch (ExceptionInterface $e) {
+                array_push($tabError, ["la connection à échoué pour l'établissement" . $id .
+                 " veuillez rechercher les coordonnées manuellement"]);
+                continue;
+            }
+
+            if (isset($content["features"][0]['geometry']['coordinates'])) {
+                $coordsTab = $content["features"][0]['geometry']['coordinates'];
+                $coords = $coordsTab[0] . "," . $coordsTab[1];
+                $etab->setCoordinates($coords);
+                $this->getDoctrine()->getManager()->flush();
+            } else {
+                array_push($tabError, ["l'Api n'a pas trouvé d'adresse pour l'établissement " . $id .
+                    " , veuillez rechercher les coordonnées manuellement.", $id]);
+            }
+            sleep(1);
+        }
+
+        if (empty($tabError) === false) {
+            return $this->render('finess/errorTemplateMulti.html.twig', ['errors'=>$tabError]);
+        } else {
+            return $this->redirectToRoute('finess_index');
+        }
     }
 }

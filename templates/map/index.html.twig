@@ -25,15 +25,19 @@
         <div id="map" class="map"></div>
     </div>
     {% for etab in finess %}
-        <div class="ponctuel" style="display: none;">
-            <a class="label" id="label" target="_blank" href="/map/strainEsinByFiness/{{ etab.id }}/{{ etab.finess }}">{{ etab.etablissement }}</a>
-            <div class = "marker" id="marker" title="Marker"></div>
-            <div class ="coord">{{ etab.coordinates }}</div>
-        </div>
+        {% if etab.coordinates != null %}
+            <div class="ponctuel" style="display: none;">
+                <a class="label" id="label" target="_blank" href="/map/strainEsinByFiness/{{ etab.id }}/{{ etab.finess }}">{{ etab.etablissement }}</a>
+                <div class = "marker" id="marker" title="Marker"></div>
+                <div class ="coord">{{ etab.coordinates }}</div>
+            </div>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}
 
+
  {% block javascripts %}
      <script src="/openlayer/finessLayer.js"></script>
  {% endblock %}
+

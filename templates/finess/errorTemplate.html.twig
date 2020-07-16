@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etablissement{% endblock %}
+
+{% block body %}
+
+<h1>Retour de l'Api</h1>
+
+    <ul>
+        {% for error in errors %}
+            <li> <a class="btn btn-warning" href="{{ path('finess_edit', {'id': etab.id}) }}">{{ error }}</a></li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
