@@ -143,8 +143,8 @@ class FinessController extends AbstractController
             $response = $client->request('GET', $url);
             $content = $response->toArray();
         } catch (ExceptionInterface $e) {
-            return $this->render('finess/errorTemplate.html.twig', ['error'=>"La connection à l'Api è échouée, 
-                   veuillez entrer les coordonnées manuellement."]);
+            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'est pas disponible,
+             veuillez trouvé l'adresse pour l'établissement " . $id . " , manuellement."], 'etab'=>$finess]);
         }
 
         if (isset($content["features"][0]['geometry']['coordinates'])) {
@@ -153,8 +153,8 @@ class FinessController extends AbstractController
             $finess->setCoordinates($coords);
             $this->getDoctrine()->getManager()->flush();
         } else {
-            return $this->render('finess/errorTemplate.html.twig', ['error'=>"L'Api n'a pas rouvé d'adresse, 
-                   veuillez la rechercher manuellement."]);
+            return $this->render('finess/errorTemplate.html.twig', ['errors'=>["L'Api n'a pas rouvé 
+            d'adresse pour l'établissement " . $id . " , veuillez la rechercher manuellement."],'etab'=>$finess]);
         }
 
 
@@ -172,20 +172,33 @@ class FinessController extends AbstractController
             $ville = $etab->getVille();
             $adresse = $etab->getAdresse();
             $codePostal = $etab->getCodePostal();
+            $id = $etab->getId();
+
 
             $client = HttpClient::create();
             $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " "
                 . $ville . "&postcode=" . $codePostal . "&limit=1";
-            $response = $client->request('GET', $url);
 
-            $content = $response->toArray();
+            $tabError=[];
 
-            $coordsTab = $content["features"][0]['geometry']['coordinates'];
-            $coords = $coordsTab[0] . "," . $coordsTab[1];
-            $etab->setCoordinates($coords);
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $response = $client->request('GET', $url);
+                $content = $response->toArray();
+            } catch (ExceptionInterface $e) {
+                array_push($tabError, ["la connection à échoué pour l'établissement" . $id]);
+                continue;
+            }
 
-            sleep(2);
+            if (isset($content["features"][0]['geometry']['coordinates'])) {
+                $coordsTab = $content["features"][0]['geometry']['coordinates'];
+                $coords = $coordsTab[0] . "," . $coordsTab[1];
+                $etab->setCoordinates($coords);
+                $this->getDoctrine()->getManager()->flush();
+            } else {
+                array_push($tabError, ["l'Api n'a pas trouvé d'adresse pour l'établissement" . $id]);
+            }
+
+            sleep(1);
         }
 
         return $this->redirectToRoute('finess_index');
