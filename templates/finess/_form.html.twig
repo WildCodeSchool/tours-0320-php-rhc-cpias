@@ -2,5 +2,8 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <button class="btn btn-success" class="btn">{{ button_label|default('Enregistrer') }}</button>
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+
+        <a class="btn btn-success btnCoord " href="{{ path('finess_coord', {'id': finess.id}) }}">Mise à jour des coordonnées</a>
+
 </div>

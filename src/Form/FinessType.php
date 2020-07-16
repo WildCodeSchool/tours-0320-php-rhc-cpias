@@ -6,18 +6,20 @@ use App\Entity\Finess;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class FinessType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('etablissement')
-            ->add('adresse')
-            ->add('codePostal')
-            ->add('ville')
-            ->add('finess')
-            ->add('coordinates')
+            ->add('etablissement', TextType::class)
+            ->add('adresse', TextType::class)
+            ->add('codePostal', IntegerType::Class)
+            ->add('ville', TextType::class)
+            ->add('finess', IntegerType::class)
+            ->add('coordinates', TextType::class)
         ;
     }
 
