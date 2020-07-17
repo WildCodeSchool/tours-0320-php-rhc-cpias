@@ -125,7 +125,7 @@ class FinessController extends AbstractController
     }
 
     /**
-     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+"})
+     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+| "})
      */
     public function updateCoord(Finess $finess)
     {
