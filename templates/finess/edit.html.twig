@@ -8,6 +8,7 @@
 
     {{ include('finess/_form.html.twig', {'button_label': 'Modifier'}) }}
 
+    <a class="btn btn-success btnCoord " href="{{ path('finess_coord', {'id': finess.id}) }}">Mise à jour des coordonnées</a>
     <a class="btn btn-info" href="{{ path('finess_index') }}">Retour</a>
 
     {{ include('finess/_delete_form.html.twig') }}
