@@ -124,6 +124,8 @@ class FinessController extends AbstractController
         );
     }
 
+    /*Route qui gère la recherche des automatique des coordonnées via l'api geo.api.gouv */
+
     /**
      * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+| "})
      */
@@ -135,6 +137,7 @@ class FinessController extends AbstractController
         $id=$finess->getId();
         $codePostal=$finess->getCodePostal();
 
+        //connection à l'api
         $client = HttpClient::create();
         $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresse . " " . $ville .
             "&postcode=" . $codePostal . "&limit=1";
@@ -147,6 +150,8 @@ class FinessController extends AbstractController
              veuillez trouvé l'adresse pour l'établissement " . $id . " , manuellement."], 'etab'=>$finess]);
         }
 
+        // récupération et enregistrement des coordonnées si l'api en à trouvé autrement
+        // renvoi d'un lien pour mettre à jour les coordonnées manuellement
         if (isset($content["features"][0]['geometry']['coordinates'])) {
             $coordsTab = $content["features"][0]['geometry']['coordinates'];
             $coords = $coordsTab[0] . "," . $coordsTab[1];
@@ -161,6 +166,11 @@ class FinessController extends AbstractController
 
         return $this->redirectToRoute('finess_show', ['id'=>$id]);
     }
+
+    /*Route qui gère la recherche des automatique d'un grand nombre de coordonnées via l'api geo.api.gouv
+    pas de bouton , à lancer via la barre d'adresse, uniquement à l'usage d'un technicien
+    enregistre les coordonnées ou renvoie un tableau d'erreurs contennant des liens pour mettre
+    à jour manuellement les coordonnées */
 
     /**
      * @Route("/allcoords", name="AllCoord", methods={"GET","POST"})
