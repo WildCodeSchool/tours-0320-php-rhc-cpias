@@ -40,7 +40,7 @@ class Finess
     private $ville;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $finess;
 
@@ -112,12 +112,12 @@ class Finess
         return $this;
     }
 
-    public function getFiness(): ?int
+    public function getFiness(): ?string
     {
         return $this->finess;
     }
 
-    public function setFiness(int $finess): self
+    public function setFiness(string $finess): self
     {
         $this->finess = $finess;
 
