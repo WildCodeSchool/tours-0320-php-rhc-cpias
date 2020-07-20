@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Finess;
 use App\Repository\UserRepository;
+use App\Repository\FinessRepository;
 use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Security\LoginFormAuthenticator;
@@ -29,7 +31,8 @@ class RegistrationController extends AbstractController
     public function registerAction(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        FinessRepository $finessRepo
     ) :Response {
 
         $users = $userRepository->findAll();
@@ -38,6 +41,7 @@ class RegistrationController extends AbstractController
         }
 
         $user = new User();
+        $finess = new Finess();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -50,6 +54,7 @@ class RegistrationController extends AbstractController
             $user->setRoles(["ROLE_TECHNICIAN"]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($finess);
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte à bien été enregistré.');
 
