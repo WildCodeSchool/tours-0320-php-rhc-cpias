@@ -37,9 +37,9 @@ class FindFiness
                     $finess = new Finess();
                     $finess ->setEtablissement($record[0]);
                     $finess ->setAdresse($record[1]);
-                    $finess ->setCodePostal($record[2]);
-                    $finess ->setVille($record[3]);
-                    $finess ->setFiness($record[4]);
+                    $finess ->setCodePostal($record[3]);
+                    $finess ->setVille($record[4]);
+                    $finess ->setFiness($record[5]);
                     $record = fgetcsv($openFile, 0, ";", '"');
                     $this->entityManager->persist($finess);
 
