@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des signalements e-sin{% endblock %}
-
+{% block stylesheets %}
+    {{ encore_entry_link_tags('esin') }}
+{% endblock %}
 {% block body %}
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -13,7 +15,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">identifiant de la fiche</th>
+            <th scope="col">Identifiant de la fiche</th>
             <th scope="col">Emission de la fiche</th>
             <th scope="col">Actions</th>
         </tr>
@@ -35,7 +37,7 @@
     </table>
 
         {% if is_granted('ROLE_TECHNICIAN') %}
-        <a class="btn btn-success" href="{{ path('esin_new') }}">Ajouter un signalement e-sin</a>
+        <a class="btn btn-success" id ="add" href="{{ path('esin_new') }}">Ajouter un signalement e-sin</a>
         {% endif %}
 
 {% endblock %}
