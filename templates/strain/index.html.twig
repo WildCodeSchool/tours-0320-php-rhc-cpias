@@ -3,7 +3,7 @@
 {% block title %}Liste des résultats{% endblock %}
 
 {% block body %}
-    <h1 class = "titreListe" >Liste des résultats</h1>
+    <h1 class = "titreListe" >Liste des souches</h1>
     {% if is_granted('ROLE_TECHNICIAN') %}
         <a class="btn btn-success" href="{{ path('strain_new') }}">Ajouter une nouvelle souche</a>
     {%  endif %}
@@ -29,9 +29,9 @@
                 <td>{{ strain.microOrganisme }}</td>
                 <td>{{ strain.resistance }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ path('strain_show', {'id': strain.id}) }}">Afficher</a>
                     {% if is_granted('ROLE_TECHNICIAN') %}
                         <a class="btn btn-warning" href="{{ path('strain_edit', {'id': strain.id}) }}">Modifier</a>
+                        {{ include('strain/_delete_form.html.twig') }}
                     {%endif%}
                 </td>
             </tr>
