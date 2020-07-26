@@ -1,0 +1,15 @@
+#retour, #add{
+    margin: 20px;
+}
+
+#add {
+    float: right;
+}
+
+footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding-top:50px;
+    height:50px;
+}
