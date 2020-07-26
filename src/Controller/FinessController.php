@@ -127,7 +127,7 @@ class FinessController extends AbstractController
     /*Route qui gère la recherche des automatique des coordonnées via l'api geo.api.gouv */
 
     /**
-     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+| "})
+     * @Route("/coord/{id}", name="finess_coord", methods={"GET","POST"}, requirements = {"id": "\d+"})
      */
     public function updateCoord(Finess $finess)
     {
