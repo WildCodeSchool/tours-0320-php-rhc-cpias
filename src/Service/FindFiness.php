@@ -43,8 +43,8 @@ class FindFiness
                     $record = fgetcsv($openFile, 0, ";", '"');
                     $this->entityManager->persist($finess);
 
-                    $this->entityManager->flush();
                 }
+                $this->entityManager->flush();
             }
         }
     }
