@@ -21,6 +21,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('ol', './assets/scss/ol.css')
     .addEntry('carte', './assets/scss/carte.css')
+    .addEntry('esin', './assets/scss/esin.css')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
