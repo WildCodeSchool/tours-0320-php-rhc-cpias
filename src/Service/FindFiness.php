@@ -42,7 +42,6 @@ class FindFiness
                     $finess ->setFiness($record[5]);
                     $record = fgetcsv($openFile, 0, ";", '"');
                     $this->entityManager->persist($finess);
-
                 }
                 $this->entityManager->flush();
             }

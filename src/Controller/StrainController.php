@@ -55,18 +55,6 @@ class StrainController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="strain_show", methods={"GET"})
-     * @param Strain $strain
-     * @return Response
-     */
-    public function show(Strain $strain): Response
-    {
-        return $this->render('strain/show.html.twig', [
-            'strain' => $strain,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="strain_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_TECHNICIAN")
      * @param Request $request
