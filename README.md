@@ -101,4 +101,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## Acknowledgments
+Mardi 28/07, 19h47: Après avoir écouté 3 fois la réédition 2016 de la Première Consultation et mangé un Magnum aux Amandes, ma fonctionnalité marche. Enfin.
+
 
