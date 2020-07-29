@@ -1,6 +1,4 @@
-
 // sources des données servant à remplir le paramètre "source" d'une layer
-
 let sourceReg= new ol.source.Vector({
 				url: "/openlayer/kml/regionCentre.kml",
 				format: format = new ol.format.KML({
@@ -12,7 +10,6 @@ let sourceOSM = new ol.source.OSM();
 
 
 // instanciation des différentes Layers (couches) de données de la carte.
-
 let centre = new ol.layer.Vector({
 	source: sourceReg
 	});
@@ -23,7 +20,6 @@ let OSMlayer =  new ol.layer.Tile({
 
 
 // instanciation de la carte
-
 let map = new ol.Map({
 	target: 'map',
 	layers: [OSMlayer,centre],
@@ -33,12 +29,30 @@ let map = new ol.Map({
 	})
 });
 
-// instanciation des Overlay (surcouche), les points sur la carte et le lien sur le nom de l'établissement
+// récupère l'objet View associé à la map
+const view  = map.getView();
+//fonction pour affichage des liens en fonction du zoom
+function overlay()
+{
+	let labelTableau = document.querySelectorAll(".label");
+	let zoom = view.getZoom();
 
-	// instanciation d'une variable qui récupère tt les élément de la class "ponctuel" (1 élément = 1 point sur la carte)
+	Array.prototype.slice.call(labelTableau).forEach(function(element){
 
+		if (zoom >12) {
+			element.style.fontSize = '20px';
+		}else{
+			element.style.fontSize = '0px';
+		}
+
+	});
+
+}
+
+// instanciation d'une variable qui récupère tt les élément de la class "ponctuel" (1 élément = 1 point sur la carte)
 let ponctuelTableau = document.querySelectorAll(".ponctuel");
 
+// instanciation des Overlay (surcouche), les points sur la carte et le lien sur le nom de l'établissement
 Array.prototype.slice.call(ponctuelTableau).forEach(function(element){
 
 	// récupération des coordonnées dans le html
@@ -59,17 +73,19 @@ Array.prototype.slice.call(ponctuelTableau).forEach(function(element){
 	// ajout de la surcouche à la carte
 	map.addOverlay(marker);
 
-	// lien sur le nom de l'établissement
 
-	var lien = new ol.Overlay({
-			position: coordProj,
-			positioning: 'top-right',
-			element: element.querySelector('#label'),
-			stopEvent: false
-		});
-		map.addOverlay(lien);
+	let lien = new ol.Overlay({
+		position: coordProj,
+		positioning: 'top-right',
+		element: element.querySelector('#label'),
+		stopEvent: false
+	});
+	map.addOverlay(lien);
+
 
 });
 
+// évenement qui déclenche la fonction overlay (fin de mouvement de souris sur carte)
+map.on('moveend', overlay);
 
 
