@@ -209,7 +209,8 @@ class FinessController extends AbstractController
                 array_push($tabError, ["l'Api n'a pas trouvé d'adresse pour l'établissement " . $id .
                     " , veuillez rechercher les coordonnées manuellement.", $id]);
             }
-            sleep(1);
+            //A activer si l'Api est surchargée
+            //sleep(1);
         }
 
         if (empty($tabError) === false) {
